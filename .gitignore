@@ -1,0 +1,15 @@
+/.env
+/.settings.yml
+/main
+/chromedriver
+/data/*
+!/data/.gitkeep
+settings.json
+.terraform/
+*.svg.bkp
+config
+/mem.pprof
+file_*.pdf
+heap.*.pprof
+.env.secret
+__debug_bin
