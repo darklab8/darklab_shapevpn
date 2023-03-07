@@ -27,3 +27,4 @@ resource "hcloud_server" "cluster" {
 output "cluster_ip" {
   value = hcloud_server.cluster.ipv4_address
 }
+

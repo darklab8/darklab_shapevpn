@@ -5,3 +5,7 @@ variable "environment" {
 variable "server_power" {
   type = string
 }
+
+variable "domain" {
+  type = string
+}
