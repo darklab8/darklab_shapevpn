@@ -1,15 +1,4 @@
 ---
-- name: Copy docker image
-  ansible.builtin.copy:
-    src: image_wireguard.tar
-    dest: image_wireguard.tar
-
-- name: Load image from archive
-  docker_image:
-    name: darkwind8/shapevpn:wireguard-latest
-    load_path: image_wireguard.tar
-    source: load
-
 - name: Run container
   docker_container:
     name: image_wireguard

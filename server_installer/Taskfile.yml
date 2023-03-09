@@ -9,6 +9,11 @@ tasks:
     cmds:
       - docker build --tag test .
 
+  push:
+    cmds:
+      - docker tag test darkwind8/shapevpn:installer-latest
+      - docker push darkwind8/shapevpn:installer-latest
+
   integration1:
     cmds:
       - sudo rm -R configs | true

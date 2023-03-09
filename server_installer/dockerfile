@@ -2,18 +2,12 @@ FROM python:3.9-slim
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
-ENV version 1
+
 RUN apt update
+RUN apt install -y ansible
+RUN ansible-galaxy collection install community.general
 
-RUN apt install -y openssh-client
-RUN apt install -y sshpass
-
-RUN apt install -y make
-
-RUN apt install -y qrencode
 RUN apt install -y wget
-
-RUN apt-get install -y build-essential libssl-dev libffi-dev python3-dev cargo
 
 COPY ./requirements.txt ./constraints.txt ./
 RUN pip install -r requirements.txt -c constraints.txt
@@ -21,13 +15,10 @@ RUN pip install -r requirements.txt -c constraints.txt
 WORKDIR /app
 
 # load docker installer
-# may be should be replaced with geerlingguy solution?
+# TODO may be should be replaced with geerlingguy solution?
 RUN mkdir -p roles/install_dockered_wireguard/files
 COPY roles/install_dockered_wireguard/files/requirements.wget.sh roles/install_dockered_wireguard/files/requirements.wget.sh
 RUN cd /app/roles/install_dockered_wireguard/files/ && ./requirements.wget.sh
-
-# load wireguard image
-COPY roles/install_dockered_wireguard/files/image_wireguard.tar roles/install_dockered_wireguard/files/image_wireguard.tar
 
 COPY roles roles
 COPY src src
@@ -35,7 +26,6 @@ COPY src src
 COPY ./start.py ./download_configs.yml ./install_dockered_wireguard.yml ./ansible.cfg ./
 COPY ./install_dockered_requirements.yml ./enable_password_login_for_test.yml ./
 
-RUN python3 -c "from pathlib import Path; assert Path('roles/install_dockered_wireguard/files/image_wireguard.tar').is_file(), 'wireguard image does not exist'"
 RUN python3 -c "from pathlib import Path; assert Path('roles/install_dockered_wireguard/files/docker-ce_20.10.9~3-0~ubuntu-focal_amd64.deb').is_file(), 'docker-ce_20.10.9~3-0~ubuntu-focal_amd64.deb does not exist'"
 
 ENTRYPOINT ["python3", "start.py"]

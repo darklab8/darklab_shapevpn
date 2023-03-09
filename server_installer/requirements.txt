@@ -1,6 +1,4 @@
-ansible
 cryptography
-pycryptodome
 Jinja2
 redis
 pydantic
