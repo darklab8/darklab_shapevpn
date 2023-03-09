@@ -13,3 +13,9 @@ file_*.pdf
 heap.*.pprof
 .env.secret
 __debug_bin
+private.test.key
+hosts.yml
+hosts2.yml
+hosts.test.yml
+sampleDir.zip
+private.key

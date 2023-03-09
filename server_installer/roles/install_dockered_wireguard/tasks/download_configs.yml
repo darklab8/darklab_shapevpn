@@ -1,0 +1,15 @@
+---
+- name: Downloading configs
+  ansible.builtin.fetch:
+    src: "{{config_folder}}/{{item}}.conf"
+    dest: configs/
+    flat: yes
+  loop: "{{users}}"
+
+- name: Creating qr codes
+  shell: qrencode -t PNG -o configs/{{item}}.png < configs/{{item}}.conf
+  delegate_to: localhost
+  args:
+    creates: "configs/{{item}}.image"
+  loop: "{{users}}"
+  become: false

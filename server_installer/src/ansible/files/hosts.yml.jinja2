@@ -1,0 +1,20 @@
+all:
+  vars:
+    ansible_user: {{user}}
+    {% if password -%}
+    ansible_ssh_pass: "{{password}}"
+    {% endif -%}
+    ansible_connection: ssh 
+    ansible_port: {{server_ssh_port}}
+    ansible_ssh_extra_args: '-o ForwardAgent=yes'
+
+  children:
+    wireguard_server:
+      hosts:
+        {{server_target}}
+      vars:
+        users: "{{ range(1, users + 1) | list }}"
+        {% if is_docker_py -%}
+        ansible_python_interpreter: /docker_py/venv/bin/python3
+        {% endif %}
+        server_vpn_port: "{{server_vpn_port}}"

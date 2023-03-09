@@ -48,7 +48,7 @@ module "cluster" {
   environment  = local.environment
   server_power = "cpx11"
   domain       = local.domain
-  ssh_key_id   = module.ssh_key.id
+  ssh_key_id   = module.ssh_key.darklab_id
   domain_records = [
     {
       type    = "A"
@@ -77,7 +77,8 @@ module "installer_test_subject" {
   environment  = local.environment
   server_power = "cpx11"
   domain       = local.domain
-  ssh_key_id   = module.ssh_key.id
+  ssh_key_id   = module.ssh_key.installer_id
+  server_image = "ubuntu-20.04"
   domain_records = [
     {
       type    = "A"

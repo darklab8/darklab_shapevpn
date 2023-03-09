@@ -1,6 +1,6 @@
 locals {
   datacenter  = "ash-dc1" # USA
-  image       = "ubuntu-22.04"
+  image       = var.server_image
   server_type = var.server_power
 }
 

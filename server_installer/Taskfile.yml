@@ -1,0 +1,15 @@
+version: "3"
+
+tasks:
+  check:
+    cmds:
+      - echo "$(cat private.key)"
+
+  build:
+    cmds:
+      - docker build --tag test .
+
+  integration1:
+    cmds:
+      - sudo rm -R configs | true
+      - docker run -v $(pwd)/configs:/app/configs test install --user="root" --ip="shapevpn-installer-test-subject.light-search.com" --auth="ssh" --private_key="$(cat private.abc.key)"

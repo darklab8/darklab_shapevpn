@@ -3,6 +3,12 @@ variable "ssh_key_id" {
   type        = number
 }
 
+variable "server_image" {
+  description = "server image"
+  type        = string
+  default     = "ubuntu-22.04"
+}
+
 variable "server_name" {
   description = "server name"
   type        = string
