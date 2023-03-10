@@ -1,5 +1,6 @@
 import logging
 from pathlib import Path
+from typing import Optional, Sequence
 
 from . import exceptions
 from .ansible import playbooks
@@ -106,10 +107,10 @@ def change_ssh_port(query: ui.UserInput) -> None:
     playbooks.change_ssh_port()
 
 
-def main() -> None:
+def main(args: Optional[Sequence[str]] = None) -> None:
     logger.configure()
     logging.debug("launching server_installer")
-    query = interface.parse()
+    query = interface.parse(args=args)
 
     if query.command == ui.Command.install:
         installing_vpn(query=query)

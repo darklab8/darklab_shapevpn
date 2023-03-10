@@ -15,7 +15,7 @@ def create_hosts_file(
     ssh.write_to_file(query.private_key)
 
     if not query.ip:
-        raise exceptions.NotFound("The terror! ip_address is not defined.")
+        raise exceptions.NotFound("The terror! ip address is not defined.")
 
     if not query.user:
         raise exceptions.NotFound("The terror! user is not defined.")

@@ -1,4 +1,6 @@
+import json
 from enum import Enum
+from typing import Dict, List
 
 from pydantic import BaseModel
 
@@ -39,3 +41,12 @@ class WireguardInput(BaseModel):
 
 class UserInput(RedisInput, AuthInput, WireguardInput):
     command: Command = Command.install
+
+    def to_args(self) -> List[str]:
+        arguments: Dict[str, str] = json.loads(self.json())
+        arguments.pop("command")
+        args = []
+        for key, value in arguments.items():
+            args.append(f"--{key}")
+            args.append(str(value))
+        return args
