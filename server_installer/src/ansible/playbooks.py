@@ -1,11 +1,12 @@
-import os
-from os.path import exists
-import subprocess
 import logging
+import os
+import subprocess
 from dataclasses import dataclass
-from . import ssh
-from ..interface import ui
+from os.path import exists
+
 from .. import exceptions
+from ..interface import ui
+from . import ssh
 
 
 @dataclass

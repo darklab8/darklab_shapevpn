@@ -1,7 +1,8 @@
 import argparse
-from typing import Sequence, Optional
 import logging
-from .ui import UserInput, Command, RedisInput, AuthInput, WireguardInput
+from typing import Optional, Sequence
+
+from .ui import AuthInput, Command, RedisInput, UserInput, WireguardInput
 
 
 def parse(args: Optional[Sequence[str]] = None) -> UserInput:
@@ -29,6 +30,7 @@ def parse(args: Optional[Sequence[str]] = None) -> UserInput:
         **{key: value for key, value in parsed.__dict__.items() if value is not None}
     )
     return query
+
 
 def install_args(install: argparse.ArgumentParser) -> None:
     redis = install.add_argument_group("redis")

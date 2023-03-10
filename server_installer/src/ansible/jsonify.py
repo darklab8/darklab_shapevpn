@@ -1,10 +1,10 @@
-import os
 import base64
 import json
-from zipfile import ZipFile
+import os
 from os.path import basename
 from pathlib import Path
 from typing import Generator, Tuple
+from zipfile import ZipFile
 
 
 def decoder(data: str) -> bytes:

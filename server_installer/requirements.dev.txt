@@ -2,3 +2,4 @@ mypy
 black
 types-redis
 pytest
+isort

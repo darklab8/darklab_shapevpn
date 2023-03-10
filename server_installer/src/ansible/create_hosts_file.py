@@ -1,9 +1,11 @@
-from jinja2 import Template
 import logging
-from . import ssh
 from pathlib import Path
-from ..interface import ui
+
+from jinja2 import Template
+
 from .. import exceptions
+from ..interface import ui
+from . import ssh
 
 
 def create_hosts_file(

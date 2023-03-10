@@ -1,5 +1,6 @@
-from . import redis
 import secrets
+
+from . import redis
 
 
 def test_redis_works(redis_conn: redis.Redis) -> None:

@@ -1,7 +1,8 @@
-from .ansible.create_hosts_file import create_hosts_file
-from os.path import exists
 import subprocess
+from os.path import exists
 from pathlib import Path
+
+from .ansible.create_hosts_file import create_hosts_file
 from .interface import ui
 
 

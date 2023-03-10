@@ -1,14 +1,14 @@
-from .ansible.create_hosts_file import create_hosts_file
-from .ansible import playbooks
-from .ansible.configs import verify_configs_existence
-from .ansible.jsonify import get_json_of_configs
-from .storage import redis
 import logging
 from pathlib import Path
-from .interface import ui
-from .interface import interface
-from .utils import logger
+
 from . import exceptions
+from .ansible import playbooks
+from .ansible.configs import verify_configs_existence
+from .ansible.create_hosts_file import create_hosts_file
+from .ansible.jsonify import get_json_of_configs
+from .interface import interface, ui
+from .storage import redis
+from .utils import logger
 
 configs_folder = Path("configs")
 
@@ -52,6 +52,7 @@ def installing_vpn(query: ui.UserInput) -> None:
             f"task_id={query.task_id}, msg=redis_is_active, content=succesful_installation"
         )
 
+
 def test_installing_vpn(query: ui.UserInput) -> None:
     redis_conn = redis.Redis(input=ui.RedisInput(**query.dict()))
     if redis_conn.active:
@@ -63,7 +64,7 @@ def test_installing_vpn(query: ui.UserInput) -> None:
 
     logging.info(f"task_id={query.task_id}, type=install_vpn, msg=start")
     result = playbooks.Result(stdout="123", returncode=0)
-        
+
     if redis_conn.active:
         logging.info(
             f"task_id={query.task_id}, msg=saving_to_redis content=result.stdout"
@@ -85,6 +86,7 @@ def test_installing_vpn(query: ui.UserInput) -> None:
         logging.info(
             f"task_id={query.task_id}, msg=redis_is_active, content=succesful_installation"
         )
+
 
 def allow_password_access(query: ui.UserInput) -> None:
     logging.info(

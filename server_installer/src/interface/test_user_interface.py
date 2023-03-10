@@ -1,5 +1,4 @@
-from . import interface
-from . import ui
+from . import interface, ui
 
 
 def test_interface() -> None:

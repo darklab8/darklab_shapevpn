@@ -1,5 +1,6 @@
-from cryptography.fernet import Fernet
 from typing import Union
+
+from cryptography.fernet import Fernet
 
 
 class SymmetricEncryptor:

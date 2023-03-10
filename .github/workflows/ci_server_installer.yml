@@ -1,0 +1,51 @@
+name: CI server_installer
+
+on:
+  pull_request: {}
+  workflow_call: {}
+  push:
+    paths:
+      - server_installer/**
+
+jobs:
+  linter:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+          architecture: x64
+      - name: Install requirements
+        run: |
+          pip install -r server_installer/requirements.txt -r server_installer/requirements.dev.txt -c server_installer/constraints.txt
+      - name: Black
+        run: black --check server_installer
+      - name: Mypy
+        run: mypy server_installer
+      - name: Isort
+        run: isort --check --profile black server_installer
+  unit-tests:
+    runs-on: ubuntu-22.04
+    container: python:3.9
+    services:
+      redis:
+        # Docker Hub image
+        image: redis
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install requirements
+        run: |
+          pip install -r server_installer/requirements.txt -r server_installer/requirements.dev.txt -c server_installer/constraints.txt
+      - name: Pytest
+        run: pytest
+        env:
+          test_redis_host: redis
