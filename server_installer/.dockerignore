@@ -134,3 +134,4 @@
 roles/install_dockered_wireguard/files/containerd.io_1.4.9-1_amd64.deb
 roles/install_dockered_wireguard/files/docker-ce_20.10.9~3-0~ubuntu-focal_amd64.deb
 roles/install_dockered_wireguard/files/docker-ce-cli_20.10.9~3-0~ubuntu-focal_amd64.deb
+!src/ansible/testdata/configs/

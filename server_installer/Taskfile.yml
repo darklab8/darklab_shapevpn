@@ -18,3 +18,18 @@ tasks:
     cmds:
       - sudo rm -R configs | true
       - docker run -v $(pwd)/configs:/app/configs test install --user="root" --ip="shapevpn-installer-test-subject.light-search.com" --auth="ssh" --private_key="$(cat private.abc.key)"
+
+  integration2:
+    cmds:
+      - sudo rm -R configs | true
+      - docker-compose -f docker-compose.test.yml -p testrun build &&
+        docker-compose -f docker-compose.test.yml -p testrun  up -d redis &&
+        sleep 3 &&
+        docker-compose -f docker-compose.test.yml -p testrun run app test_install
+        --user="root" --ip="shapevpn-installer-test-subject.light-search.com"
+        --auth="ssh"
+        --private_key="$(cat private.abc.key)"
+        --redis_host="redis"
+        --redis_port="6379"
+        --task_id="123"
+        --encryption_key="1InvkFDBGKDLpawxL6U2r0O4aVZJbPJI-XPwy7GudSs="

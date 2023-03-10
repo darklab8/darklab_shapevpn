@@ -52,6 +52,39 @@ def installing_vpn(query: ui.UserInput) -> None:
             f"task_id={query.task_id}, msg=redis_is_active, content=succesful_installation"
         )
 
+def test_installing_vpn(query: ui.UserInput) -> None:
+    redis_conn = redis.Redis(input=ui.RedisInput(**query.dict()))
+    if redis_conn.active:
+        logging.info(
+            f"task_id={query.task_id}, msg=redis_is_active, content=installing_beginning"
+        )
+
+    create_hosts_file(query=query)
+
+    logging.info(f"task_id={query.task_id}, type=install_vpn, msg=start")
+    result = playbooks.Result(stdout="123", returncode=0)
+        
+    if redis_conn.active:
+        logging.info(
+            f"task_id={query.task_id}, msg=saving_to_redis content=result.stdout"
+        )
+        redis_conn.set_stdout(data=result.stdout)
+
+    configs_folder = Path(__file__).parent / "ansible" / "testdata" / "configs"
+    if not verify_configs_existence(configs_folder):
+        logging.info(f"task_id={query.task_id}, msg=configs were not found")
+        raise exceptions.NotFound("configs were not found")
+
+    logging.info(f"task_id={query.task_id}, type=get_json_of_configs")
+    configs_data = get_json_of_configs(configs_folder)
+
+    if redis_conn.active:
+        logging.info(f"task_id={query.task_id}, msg=saving_to_redis content=configs")
+
+        redis_conn.set_config(data=configs_data)
+        logging.info(
+            f"task_id={query.task_id}, msg=redis_is_active, content=succesful_installation"
+        )
 
 def allow_password_access(query: ui.UserInput) -> None:
     logging.info(
@@ -78,6 +111,8 @@ def main() -> None:
 
     if query.command == ui.Command.install:
         installing_vpn(query=query)
+    elif query.command == ui.Command.test_install:
+        test_installing_vpn(query=query)
     elif query.command == ui.Command.enable_password_login:
         allow_password_access(query=query)
     elif query.command == ui.Command.change_ssh_port_to_22000:

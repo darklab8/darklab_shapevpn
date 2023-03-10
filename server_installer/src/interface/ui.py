@@ -4,8 +4,9 @@ from enum import Enum
 
 class Command(str, Enum):
     install = "install"
-    enable_password_login = "enable_password_login"
-    change_ssh_port_to_22000 = "change_ssh_port_to_22000"
+    test_install = "test_install"
+    enable_password_login = "enable_password_login" # refactor if u need
+    change_ssh_port_to_22000 = "change_ssh_port_to_22000" # refactor if u need
 
 
 class AuthType(str, Enum):

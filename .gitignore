@@ -19,3 +19,5 @@ hosts2.yml
 hosts.test.yml
 sampleDir.zip
 private.key
+.mypy_cache
+__pycache__

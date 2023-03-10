@@ -19,7 +19,18 @@ def parse(args: Optional[Sequence[str]] = None) -> UserInput:
     )
 
     install = subparsers.add_parser(Command.install.name)
+    install_args(install)
 
+    test_install = subparsers.add_parser(Command.install.test_install)
+    install_args(test_install)
+
+    parsed = parser.parse_args(args)
+    query = UserInput(
+        **{key: value for key, value in parsed.__dict__.items() if value is not None}
+    )
+    return query
+
+def install_args(install: argparse.ArgumentParser) -> None:
     redis = install.add_argument_group("redis")
     redis.add_argument(
         "--redis_host",
@@ -90,9 +101,3 @@ def parse(args: Optional[Sequence[str]] = None) -> UserInput:
         type=WireguardInput.__annotations__["server_vpn_port"],
         default=None,
     )
-
-    parsed = parser.parse_args(args)
-    query = UserInput(
-        **{key: value for key, value in parsed.__dict__.items() if value is not None}
-    )
-    return query
