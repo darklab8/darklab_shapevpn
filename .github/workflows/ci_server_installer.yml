@@ -21,6 +21,7 @@ jobs:
       - name: Install requirements
         run: |
           pip install -r server_installer/requirements.txt -r server_installer/requirements.dev.txt -c server_installer/constraints.txt
+          cp mypy.server_installer.ini mypy.ini
       - name: Black
         run: black --check server_installer
       - name: Mypy

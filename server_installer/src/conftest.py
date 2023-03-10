@@ -1,5 +1,6 @@
-import pytest
 import os
+
+import pytest
 
 from .interface import ui
 from .storage import redis
