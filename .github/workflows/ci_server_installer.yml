@@ -6,6 +6,7 @@ on:
   push:
     paths:
       - server_installer/**
+      - mypy.server_installer.ini
 
 jobs:
   linter:
