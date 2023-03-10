@@ -47,6 +47,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install requirements
         run: |
+          echo "${{ secrets.SECRET_TOKEN }}" > server_installer/private.abc.key
           pip install -r server_installer/requirements.txt -r server_installer/requirements.dev.txt -c server_installer/constraints.txt
       - name: Pytest
         run: pytest
