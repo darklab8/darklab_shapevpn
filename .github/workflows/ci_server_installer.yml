@@ -4,9 +4,10 @@ on:
   pull_request: {}
   workflow_call: {}
   push:
-    paths:
-      - server_installer/**
-      - mypy.server_installer.ini
+    {}
+    # paths:
+    #   - server_installer/**
+    #   - mypy.server_installer.ini
 
 jobs:
   linter:
