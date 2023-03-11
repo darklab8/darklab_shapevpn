@@ -1,0 +1,47 @@
+name: CI server_installer
+
+on:
+  pull_request: {}
+  workflow_call: {}
+  push: {}
+
+jobs:
+  linter:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+          architecture: x64
+      - name: Install requirements
+        run: |
+          pip install -r backend_api/requirements.txt -r backend_api/requirements.dev.txt -c backend_api/constraints.txt
+      - name: Black
+        run: black --check backend_api
+      - name: Mypy
+        run: mypy backend_api
+      - name: Isort
+        run: isort --check --profile black backend_api
+  unit-tests:
+    runs-on: ubuntu-22.04
+    container: docker:20.10.12
+    services:
+      redis:
+        # Docker Hub image
+        image: docker:20.10.12-dind
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "docker ps"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DOCKER_HOST: tcp://docker:2375
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: |
+          docker build --tag darkwind8/shapevpn:backend-latest --file backend_api/Dockerfile .
