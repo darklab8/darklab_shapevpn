@@ -1,10 +1,5 @@
 import os
 
-# CELERY_BROKER = config.get("celery.broker", "")
-# CELERY_BACKEND = config.get("celery.backend", "")
-
-# LOGGER_CONSOLE_LEVEL = config.get("logger.console.level", "INFO")
-
 DEBUG = os.environ.get("debug") == "true"
 
 REDIS_QUEUE_HOST = os.environ.get("REDIS_QUEUE_HOST", "localhost")
@@ -28,4 +23,9 @@ ALLOWED_ORIGIN = os.environ.get("ALLOWED_ORIGIN", "")
 INSTALLER_IMAGE = os.environ.get(
     "image",
     "darkwind8/shapevpn:installer-latest",
+)
+
+REDIS_QUEUE = f"redis://:{REDIS_QUEUE_PASSWORD}@{REDIS_QUEUE_HOST}:{REDIS_QUEUE_PORT}/0"
+REDIS_RESULT = (
+    f"redis://:{REDIS_RESULT_PASSWORD}@{REDIS_RESULT_HOST}:{REDIS_RESULT_PORT}/0"
 )

@@ -27,7 +27,6 @@ jobs:
         run: isort --check --profile black backend_api
   unit-tests:
     runs-on: ubuntu-22.04
-
     steps:
       - uses: actions/checkout@v3
 

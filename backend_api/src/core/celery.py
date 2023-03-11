@@ -1,6 +1,6 @@
-import os
-
 from celery.app.task import Task
+
+from server_installer.src.utils import logger
 
 Task.__class_getitem__ = classmethod(  # type: ignore[attr-defined]
     lambda cls, *args, **kwargs: cls
@@ -10,12 +10,13 @@ from celery import Celery
 
 from ..installer.tasks import loop_task
 
-config = os.environ
+logger.configure()
+from . import settings as conf
 
 app = Celery(
     "core",
-    broker=config.get("CACHE_BACKEND", "redis://redis:6379"),
-    backend=config.get("CACHE_BACKEND", "redis://redis:6379"),
+    broker=conf.REDIS_QUEUE,
+    backend=conf.REDIS_RESULT,
 )
 
 seconds_repeat = 30.0

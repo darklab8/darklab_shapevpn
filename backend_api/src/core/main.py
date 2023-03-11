@@ -2,13 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 import backend_api.src.installer.views as example_views
+from server_installer.src.utils import logger
 
 from ..types import PingResponce
 
 
 def app_factory() -> FastAPI:
-    from . import settings
-
+    logger.configure()
     app = FastAPI()
 
     app.add_middleware(
