@@ -21,6 +21,6 @@ sampleDir.zip
 private.key
 .mypy_cache
 __pycache__
-mypy.ini
 private_pem.pem
 public_pem.pem
+venv/

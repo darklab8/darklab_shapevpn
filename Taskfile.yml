@@ -1,19 +1,30 @@
 version: "3"
 
 tasks:
-  format:installer:
+  installer:format:
     cmds:
       - mypy server_installer
       - black server_installer
       - isort --profile black server_installer
 
-  format:handler:
+  backend:format:
     cmds:
-      - black job_handler
-      - isort --profile black job_handler
-      - mypy job_handler
+      - black backend_api
+      - isort --profile black backend_api
+      - mypy backend_api
 
-  format:
+  backend:docker:build:
     cmds:
-      - task: format:installer
-      - task: format:handler
+      - docker build --tag darkwind8/shapevpn:backend-latest --file backend_api/Dockerfile .
+  backend:docker:run:
+    cmds:
+      - docker run -it -p 8000:8000 darkwind8/shapevpn:backend-latest
+  backend:docker:test:
+    cmds:
+      - docker run -it darkwind8/shapevpn:backend-latest pytest backend_api
+  backend:docker:bash:
+    cmds:
+      - docker run -it darkwind8/shapevpn:backend-latest bash
+  backend:run:
+    cmds:
+      - gunicorn backend_api.src.core.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000

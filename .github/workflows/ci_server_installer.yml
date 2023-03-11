@@ -3,11 +3,7 @@ name: CI server_installer
 on:
   pull_request: {}
   workflow_call: {}
-  push:
-    {}
-    # paths:
-    #   - server_installer/**
-    #   - mypy.server_installer.ini
+  push: {}
 
 jobs:
   linter:
@@ -23,7 +19,6 @@ jobs:
       - name: Install requirements
         run: |
           pip install -r server_installer/requirements.txt -r server_installer/requirements.dev.txt -c server_installer/constraints.txt
-          cp mypy.server_installer.ini mypy.ini
       - name: Black
         run: black --check server_installer
       - name: Mypy
@@ -50,6 +45,6 @@ jobs:
           echo "${{ secrets.SECRET_TOKEN }}" > server_installer/private.abc.key
           pip install -r server_installer/requirements.txt -r server_installer/requirements.dev.txt -c server_installer/constraints.txt
       - name: Pytest
-        run: pytest
+        run: pytest server_installer
         env:
           test_redis_host: redis

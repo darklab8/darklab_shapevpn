@@ -1,0 +1,10 @@
+flower
+gunicorn
+python-dotenv
+docker
+celery[pytest]
+cryptography
+pycryptodome
+fastapi
+httpx
+uvicorn[standard]
