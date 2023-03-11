@@ -132,4 +132,3 @@ hosts2.yml
 hosts.test.yml
 
 image_wireguard.tar
-private.abc.key

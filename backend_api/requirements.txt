@@ -8,3 +8,5 @@ pycryptodome
 fastapi
 httpx
 uvicorn[standard]
+redis
+Jinja2
