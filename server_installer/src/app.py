@@ -15,7 +15,7 @@ configs_folder = Path("configs")
 
 
 def installing_vpn(query: ui.UserInput) -> None:
-    redis_conn = redis.Redis(input=ui.RedisInput(**query.dict()))
+    redis_conn = redis.Redis(**query.dict())
     if redis_conn.active:
         logging.info(
             f"task_id={query.task_id}, msg=redis_is_active, content=installing_beginning"
@@ -48,14 +48,16 @@ def installing_vpn(query: ui.UserInput) -> None:
     if redis_conn.active:
         logging.info(f"task_id={query.task_id}, msg=saving_to_redis content=configs")
 
-        redis_conn.set_config(data=configs_data)
+        redis_conn.set_config(
+            data=configs_data, configs_encryption_key=query.configs_encryption_key
+        )
         logging.info(
             f"task_id={query.task_id}, msg=redis_is_active, content=succesful_installation"
         )
 
 
 def test_installing_vpn(query: ui.UserInput) -> None:
-    redis_conn = redis.Redis(input=ui.RedisInput(**query.dict()))
+    redis_conn = redis.Redis(**query.dict())
     if redis_conn.active:
         logging.info(
             f"task_id={query.task_id}, msg=redis_is_active, content=installing_beginning"
@@ -83,7 +85,9 @@ def test_installing_vpn(query: ui.UserInput) -> None:
     if redis_conn.active:
         logging.info(f"task_id={query.task_id}, msg=saving_to_redis content=configs")
 
-        redis_conn.set_config(data=configs_data)
+        redis_conn.set_config(
+            data=configs_data, configs_encryption_key=query.configs_encryption_key
+        )
         logging.info(
             f"task_id={query.task_id}, msg=redis_is_active, content=succesful_installation"
         )

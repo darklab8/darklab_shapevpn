@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-import backend_api.src.example.views as example_views
+import backend_api.src.installer.views as example_views
+
+from ..types import PingResponce
 
 
 def app_factory() -> FastAPI:
@@ -17,11 +19,12 @@ def app_factory() -> FastAPI:
         allow_headers=["*"],
     )
 
-    app.include_router(example_views.router)
+    app.include_router(example_views.router_example)
+    app.include_router(example_views.router_install)
 
     @app.get("/")
-    def get_ping() -> dict[str, str]:
-        return {"message": "pong!"}
+    def get_ping() -> PingResponce:
+        return PingResponce.ping()
 
     return app
 

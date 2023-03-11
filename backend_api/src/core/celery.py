@@ -8,7 +8,7 @@ Task.__class_getitem__ = classmethod(  # type: ignore[attr-defined]
 
 from celery import Celery
 
-from ..example.tasks import loop_task
+from ..installer.tasks import loop_task
 
 config = os.environ
 

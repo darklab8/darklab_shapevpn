@@ -13,32 +13,34 @@ class Redis:
     stdout_suffix = "stdout"
     config_suffix = "config"
 
-    def __init__(self, input: ui.RedisInput) -> None:
-        self._input = input
+    def __init__(
+        self, redis_host: str, redis_port: int, redis_pass: str, task_id: str
+    ) -> None:
+        self._redis_host = redis_host
 
-        self._task_id = self._input.task_id
+        self._task_id = task_id
         self._redis = redis.Redis(
-            host=input.redis_host,
-            password=input.redis_pass,
-            port=input.redis_port,
+            host=redis_host,
+            password=redis_pass,
+            port=redis_port,
             db=0,
         )
         self._active = True
 
     @property
     def active(self) -> bool:
-        return self._input.redis_host != "" and self._task_id != ""
+        return self._redis_host != "" and self._task_id != ""
 
     def _set(self, data: str, object_name: str) -> None:
         if not self._active:
             raise exceptions.RedisConnectionFaliure("redis connection is not active")
 
-        if not self._input.task_id:
+        if not self._task_id:
             raise exceptions.RedisConnectionFaliure("task_id is not defined")
 
-        self._redis.set(f"{self._input.task_id}_{object_name}", data)
+        self._redis.set(f"{self._task_id}_{object_name}", data)
         print(
-            f"task_id={self._input.task_id}, object={object_name} was sent to nosql database"
+            f"task_id={self._task_id}, object={object_name} was sent to nosql database"
         )
 
     def _get(self, key_str: str) -> Union[Any, None]:
@@ -47,20 +49,20 @@ class Redis:
     def set_stdout(self, data: str) -> None:
         self._set(data, self.stdout_suffix)
 
-    def get_stdout(self) -> Union[Any, None]:
-        return self._get(f"{self._input.task_id}_{self.stdout_suffix}")
+    def get_stdout(self) -> Union[str, None]:
+        return self._get(f"{self._task_id}_{self.stdout_suffix}")
 
-    def set_config(self, data: str) -> None:
-        encryptor = ConfigEncryptor(self._input.configs_encryption_key)
+    def set_config(self, data: str, configs_encryption_key: str) -> None:
+        encryptor = ConfigEncryptor(configs_encryption_key)
         encrypted_data = encryptor.encrypt_str(data)
         self._set(encrypted_data, self.config_suffix)
 
-    def get_config(self) -> Union[Any, None]:
-        data = self._get(f"{self._input.task_id}_{self.config_suffix}")
+    def get_config(self, configs_encryption_key: str) -> Union[str, None]:
+        data = self._get(f"{self._task_id}_{self.config_suffix}")
 
         if data is None:
             return None
 
-        encryptor = ConfigEncryptor(self._input.configs_encryption_key)
+        encryptor = ConfigEncryptor(configs_encryption_key)
         decrypted = encryptor.decrypt_bytes(data).decode("utf-8")
         return decrypted
