@@ -1,5 +1,4 @@
 import argparse
-import logging
 from typing import Optional, Sequence
 
 from .ui import AuthInput, Command, RedisInput, UserInput, WireguardInput
@@ -55,8 +54,8 @@ def install_args(install: argparse.ArgumentParser) -> None:
         default=None,
     )
     redis.add_argument(
-        "--encryption_key",
-        type=RedisInput.__annotations__["encryption_key"],
+        "--configs_encryption_key",
+        type=RedisInput.__annotations__["configs_encryption_key"],
         default=None,
     )
 

@@ -4,7 +4,7 @@ import redis
 
 from .. import exceptions
 from ..interface import ui
-from .encryptor import SymmetricEncryptor
+from .config_encryptor import ConfigEncryptor
 
 
 class Redis:
@@ -51,7 +51,7 @@ class Redis:
         return self._get(f"{self._input.task_id}_{self.stdout_suffix}")
 
     def set_config(self, data: str) -> None:
-        encryptor = SymmetricEncryptor(self._input.encryption_key)
+        encryptor = ConfigEncryptor(self._input.configs_encryption_key)
         encrypted_data = encryptor.encrypt_str(data)
         self._set(encrypted_data, self.config_suffix)
 
@@ -61,6 +61,6 @@ class Redis:
         if data is None:
             return None
 
-        encryptor = SymmetricEncryptor(self._input.encryption_key)
+        encryptor = ConfigEncryptor(self._input.configs_encryption_key)
         decrypted = encryptor.decrypt_bytes(data).decode("utf-8")
         return decrypted

@@ -18,7 +18,7 @@ def test_input_check() -> None:
         redis_host=test_redis_host,
         redis_port=6379,
         task_id=123,
-        encryption_key="1InvkFDBGKDLpawxL6U2r0O4aVZJbPJI-XPwy7GudSs=",
+        configs_encryption_key="1InvkFDBGKDLpawxL6U2r0O4aVZJbPJI-XPwy7GudSs=",
     )
 
     app.main([ui.Command.test_install.value] + query.to_args())

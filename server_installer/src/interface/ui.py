@@ -22,7 +22,7 @@ class RedisInput(BaseModel):
     redis_port: int = 6379
     redis_pass: str = ""
     task_id: str = ""
-    encryption_key: str = ""
+    configs_encryption_key: str = ""
 
 
 class AuthInput(BaseModel):

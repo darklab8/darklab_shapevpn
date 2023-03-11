@@ -3,7 +3,8 @@ from typing import Union
 from cryptography.fernet import Fernet
 
 
-class SymmetricEncryptor:
+# symetric encryptor
+class ConfigEncryptor:
     def __init__(self, secret_key: Union[str, bytes]):
         self.secret_key = secret_key
         self.encryptor = Fernet(self.secret_key)

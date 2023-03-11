@@ -4,7 +4,7 @@ import pytest
 
 from .interface import ui
 from .storage import redis
-from .storage.encryptor import SymmetricEncryptor
+from .storage.config_encryptor import ConfigEncryptor
 
 test_redis_host = os.environ.get("test_redis_host", "localhost")
 
@@ -16,7 +16,7 @@ def redis_conn() -> redis.Redis:
             redis_host=test_redis_host,
             redis_pass="",
             redis_port=6379,
-            encryption_key=SymmetricEncryptor.generate_key().decode("utf-8"),
+            configs_encryption_key=ConfigEncryptor.generate_key().decode("utf-8"),
             task_id="456",
         )
     )

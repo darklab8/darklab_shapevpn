@@ -32,4 +32,4 @@ tasks:
         --redis_host="redis"
         --redis_port="6379"
         --task_id="123"
-        --encryption_key="1InvkFDBGKDLpawxL6U2r0O4aVZJbPJI-XPwy7GudSs="
+        --configs_encryption_key="1InvkFDBGKDLpawxL6U2r0O4aVZJbPJI-XPwy7GudSs="
