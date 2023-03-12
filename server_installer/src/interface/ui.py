@@ -39,6 +39,9 @@ class WireguardInput(BaseModel):
     server_vpn_port: int = 31280
 
 
+install_command = Command.install
+
+
 class UserInput(RedisInput, AuthInput, WireguardInput):
     command: Command = Command.install
 
@@ -50,3 +53,6 @@ class UserInput(RedisInput, AuthInput, WireguardInput):
             args.append(f"--{key}")
             args.append(str(value))
         return args
+
+    def install_args(self) -> List[str]:
+        return [install_command.value] + self.to_args()

@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+networks:
+  default:
+    # Use a custom driver
+    driver: bridge
+    name: redis

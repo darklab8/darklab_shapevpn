@@ -8,7 +8,7 @@ Task.__class_getitem__ = classmethod(  # type: ignore[attr-defined]
 
 from celery import Celery
 
-from ..installer.tasks import loop_task
+from ..installer.tasks import task_vpn_install
 
 logger.configure()
 from . import settings as conf
@@ -18,10 +18,3 @@ app = Celery(
     broker=conf.REDIS_QUEUE,
     backend=conf.REDIS_RESULT,
 )
-
-seconds_repeat = 30.0
-
-
-@app.on_after_configure.connect
-def setup_periodic_tasks(sender: Celery, **kwargs: dict[str, str]) -> None:
-    sender.add_periodic_task(seconds_repeat, loop_task.s(), expires=10)

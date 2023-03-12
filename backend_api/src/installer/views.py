@@ -8,13 +8,14 @@ from fastapi import APIRouter, Body
 from pydantic import BaseModel
 
 from backend_api.src.core import settings
-from server_installer.src.interface.ui import AuthType
+from server_installer.src.interface.ui import AuthType, UserInput
 from server_installer.src.storage import redis
 from server_installer.src.storage.config_encryptor import ConfigEncryptor
 from server_installer.src.supported_oses import SupportedOSes
 
 from ..types import PingResponce
 from .code.encryption import AssymetricEncryptor
+from .tasks import ProtectedSerializer, task_vpn_install
 
 router_example = APIRouter(
     prefix="/ping",
@@ -67,7 +68,7 @@ InstallResponse = TypedDict("InstallResponse", {"task_id": str})
 
 
 @router_install.post(
-    path="/{task_id}",
+    path="/",
     summary="Install Wireguard to your server",
     description=f""".\n
     hint #1: supports ssh and password authentification methods\n
@@ -75,18 +76,10 @@ InstallResponse = TypedDict("InstallResponse", {"task_id": str})
     hint #3: supported target server OSes: {SupportedOSes.list()}""",
 )
 def install_vpn_server(
-    task_id: str,
     installing: InstallingData = Body(
         embed=False,
         title="12",
         description="34",
-        # example=InstallingData(
-        #     auth=AuthType.ssh,
-        #     ip_address="217.36.76.12",
-        #     data_key="key from /keys['data_key']",
-        #     user="root",
-        #     ssh_key="ssh key",
-        # ).dict(),
         examples={
             "example_with_ssh": dict(
                 summary="example with ssh",
@@ -114,22 +107,24 @@ def install_vpn_server(
     unique_id = secrets.token_hex(16)
     logging.info(f"unique_id={unique_id}, type=install_vpn_server, msg=start")
 
-    # task = task_vpn_install.delay(
-    #     auth=request.data["auth"],
-    #     ip_address=request.data["ip_address"],
-    #     user=request.data["user"],
-    #     password=secret_encryptor.encrypt_str(request.data.get("password", "")),
-    #     server_ssh_port=request.data.get("server_ssh_port", "22"),
-    #     server_vpn_port=request.data.get("server_vpn_port", "31280"),
-    #     start=measurer.start_time_measuring(),
-    #     private_key=secret_encryptor.encrypt_str(request.data["private_key"]),
-    #     data_key=secret_encryptor.encrypt_str(request.data["data_key"]),
-    #     unique_id=unique_id,
-    # )
-
-    # logging.info(
-    #     f"unique_id={unique_id}, type=install_vpn_server, msg=finish, status_code=200, task_id={task.id}"
-    # )
+    task = task_vpn_install.delay(
+        unique_id=unique_id,
+        user_input=ProtectedSerializer.serialize(
+            UserInput(
+                auth_type=installing.auth,
+                ip=installing.ip_address,
+                user=installing.user,
+                server_ssh_port=installing.server_ssh_port,
+                server_vpn_port=installing.server_vpn_port,
+                configs_encryption_key=installing.data_key,
+                private_key=installing.ssh_key,
+                password=installing.password,
+            )
+        ),
+    )
+    logging.info(
+        f"unique_id={unique_id}, type=install_vpn_server, msg=finish, status_code=200, task_id={task.id}"
+    )
     return {"task_id": "task.id"}
 
 
