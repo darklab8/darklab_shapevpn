@@ -23,7 +23,7 @@ COPY backend_api/requirements.txt backend_api/requirements.dev.txt backend_api/
 COPY server_installer/constraints.txt server_installer/
 RUN pip install -r backend_api/requirements.txt -r backend_api/requirements.dev.txt -c server_installer/constraints.txt
 
-COPY pytest.ini mypy.ini wait_for_it.sh ./
+COPY pytest.ini mypy.ini ./
 COPY server_installer server_installer
 COPY backend_api backend_api
 

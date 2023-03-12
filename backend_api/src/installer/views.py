@@ -24,7 +24,12 @@ router_example = APIRouter(
 
 
 @router_example.get(path="/")
-async def ping() -> PingResponce:
+async def ping_get() -> PingResponce:
+    return PingResponce.ping()
+
+
+@router_example.post(path="/")
+async def ping_post() -> PingResponce:
     return PingResponce.ping()
 
 
@@ -106,6 +111,10 @@ def install_vpn_server(
 ) -> InstallResponse:
     unique_id = secrets.token_hex(16)
     logging.info(f"unique_id={unique_id}, type=install_vpn_server, msg=start")
+
+    logging.info(
+        f"unique_id={unique_id}, type=install_vpn_server, msg=start, {installing=}"
+    )  # debug
 
     task = task_vpn_install.delay(
         unique_id=unique_id,

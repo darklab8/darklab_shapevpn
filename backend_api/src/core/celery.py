@@ -18,3 +18,15 @@ app = Celery(
     broker=conf.REDIS_QUEUE,
     backend=conf.REDIS_RESULT,
 )
+
+app.conf.broker_url = conf.REDIS_QUEUE
+app.conf.result_backend = conf.REDIS_RESULT
+
+from .tasks import loop_task
+
+seconds_repeat = 30.0
+
+
+@app.on_after_configure.connect
+def setup_periodic_tasks(sender: Celery, **kwargs: dict[str, str]) -> None:
+    sender.add_periodic_task(seconds_repeat, loop_task.s(), expires=10)

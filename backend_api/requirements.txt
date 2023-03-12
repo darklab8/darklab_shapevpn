@@ -2,7 +2,7 @@ flower
 gunicorn
 python-dotenv
 docker
-celery[pytest]
+celery[pytest,redis]
 cryptography
 pycryptodome
 fastapi

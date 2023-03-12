@@ -14,3 +14,28 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 8000:8000
+    environment:
+      REDIS_QUEUE_HOST: redis
+      REDIS_RESULT_HOST: redis
+  beat:
+    build:
+      context: .
+      dockerfile: backend_api/Dockerfile
+    depends_on:
+      - redis
+    environment:
+      REDIS_QUEUE_HOST: redis
+      REDIS_RESULT_HOST: redis
+    command: celery -A backend_api.src.core.celery beat
+  worker:
+    build:
+      context: .
+      dockerfile: backend_api/Dockerfile
+    depends_on:
+      - redis
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      REDIS_QUEUE_HOST: redis
+      REDIS_RESULT_HOST: redis
+    command: celery -A backend_api.src.core.celery worker
