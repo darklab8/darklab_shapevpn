@@ -15,7 +15,9 @@ from server_installer.src.supported_oses import SupportedOSes
 
 from ..types import PingResponce
 from .code.encryption import AssymetricEncryptor
-from .tasks import ProtectedSerializer, task_vpn_install
+from .tasks import ProtectedSerializer
+from backend_api.src.core.celery import task_vpn_install
+from backend_api.src.core.celery import app as celery_app
 
 router_example = APIRouter(
     prefix="/ping",
@@ -142,7 +144,7 @@ StatusResponse = TypedDict("StatusResponse", {"task_id": str, "meta": dict})
 
 @router_install.get(path="/{task_id}")
 def get_status(task_id: str) -> StatusResponse:
-    task: AsyncResult = AsyncResult(task_id)
+    task: AsyncResult = AsyncResult(task_id, app=celery_app)
 
     print(f"meta={task.info}")
 
@@ -150,6 +152,9 @@ def get_status(task_id: str) -> StatusResponse:
         json.dumps(task.info)
         meta = task.info
     except (TypeError, OverflowError):
+        meta = {}
+
+    if meta is None:
         meta = {}
 
     return {"task_id": task.status, "meta": meta}

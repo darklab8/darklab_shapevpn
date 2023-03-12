@@ -1,15 +1,14 @@
-import logging
 import time
 from unittest.mock import MagicMock
 
 import pytest
-from celery import Celery
 from fastapi.testclient import TestClient
 
 from backend_api.src.core import settings as conf
 from backend_api.src.types import PingResponce
 from server_installer.src.interface import ui
 from server_installer.src.utils import logger
+from backend_api.src.core.celery import task_vpn_install
 
 from . import measurer, tasks
 
@@ -51,7 +50,7 @@ def test_vpn_install_task(
     conf.INSTALLER_IMAGE = installer_image
 
     logger.configure()
-    tasks.task_vpn_install.delay(
+    task_vpn_install.delay(
         tasks.ProtectedSerializer.serialize(
             ui.UserInput(
                 auth_type=ui.AuthType.ssh,
@@ -64,3 +63,23 @@ def test_vpn_install_task(
             )
         ),
     ).get(timeout=30)
+
+
+from celery.result import AsyncResult
+
+
+def test_check_task_status(celery_app: None, celery_worker: None) -> None:
+    print("starting task")
+    task = tasks.debug_my_task.delay()
+    # task.get(timeout=30)
+    print("the task is sent")
+    print(f"{task.id}")
+
+    for _ in range(5):
+        state = AsyncResult(task.id).status
+        print(f"{state=}")
+        if state == "PROGRESS":
+            break
+        time.sleep(1)
+    else:
+        assert False, "progress state is not found"

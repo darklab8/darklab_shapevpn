@@ -177,19 +177,14 @@ class InstallServerTask:
             )
 
 
-@shared_task(bind=True)
-def task_vpn_install(
-    self: Task, user_input: Dict[str, Any], unique_id: str = "undefined"
-) -> str:
-    logging.info(f"unique_id={unique_id}, task_vpn_install begins")
-    start_time = measurer.start_time_measuring()
-    task_id = self.request.id
+import time
 
-    InstallServerTask(
-        task=self,
-        start_time=start_time,
-        unique_id=unique_id,
-        task_id=task_id,
-        user_input=ProtectedSerializer.deserialize(**user_input),
-    ).run()
-    return f"succesful_installation_{unique_id}"
+
+@shared_task(bind=True)
+def debug_my_task(self: Task) -> str:
+    print("TASK: starting task")
+    self.update_state(state="PROGRESS")
+    print("TASK: updating task state")
+    time.sleep(2)
+    print("TASK: finish sleaping")
+    return "123"
