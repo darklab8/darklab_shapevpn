@@ -38,6 +38,8 @@ jobs:
           --health-retries 5
       dind:
         image: docker:20.10.21-dind
+        env:
+          DOCKER_TLS_CERTDIR: ""
     steps:
       - uses: actions/checkout@v3
 
