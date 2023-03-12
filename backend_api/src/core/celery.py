@@ -1,9 +1,11 @@
-from celery.app.task import Task
 import logging
-from server_installer.src.utils import logger
-from backend_api.src.installer.tasks import InstallServerTask, ProtectedSerializer
+from typing import Any, Dict
+
+from celery.app.task import Task
+
 from backend_api.src.installer import measurer
-from typing import Dict, Any
+from backend_api.src.installer.tasks import InstallServerTask, ProtectedSerializer
+from server_installer.src.utils import logger
 
 Task.__class_getitem__ = classmethod(  # type: ignore[attr-defined]
     lambda cls, *args, **kwargs: cls

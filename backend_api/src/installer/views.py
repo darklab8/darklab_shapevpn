@@ -8,6 +8,8 @@ from fastapi import APIRouter, Body
 from pydantic import BaseModel
 
 from backend_api.src.core import settings
+from backend_api.src.core.celery import app as celery_app
+from backend_api.src.core.celery import task_vpn_install
 from server_installer.src.interface.ui import AuthType, UserInput
 from server_installer.src.storage import redis
 from server_installer.src.storage.config_encryptor import ConfigEncryptor
@@ -16,8 +18,6 @@ from server_installer.src.supported_oses import SupportedOSes
 from ..types import PingResponce
 from .code.encryption import AssymetricEncryptor
 from .tasks import ProtectedSerializer
-from backend_api.src.core.celery import task_vpn_install
-from backend_api.src.core.celery import app as celery_app
 
 router_example = APIRouter(
     prefix="/ping",
