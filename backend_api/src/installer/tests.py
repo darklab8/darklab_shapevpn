@@ -25,10 +25,6 @@ def test_vpn_install_directly(installer_image: str) -> None:
     ui.install_command = ui.Command.test_install
     conf.INSTALLER_IMAGE = installer_image
 
-    # FIX: Not works for CI, only for localhost
-    # conf.REDIS_RESULT_HOST = "redis"
-    # tasks.InstallServerTask.extra_container_run_args = dict(network="redis")
-
     logger.configure()
     task = MagicMock()
     tasks.InstallServerTask(
@@ -53,10 +49,6 @@ def test_vpn_install_task(
 ) -> None:
     ui.install_command = ui.Command.test_install
     conf.INSTALLER_IMAGE = installer_image
-
-    # FIX: Not works for CI, only for localhost
-    # conf.REDIS_RESULT_HOST = "redis"
-    # tasks.InstallServerTask.extra_container_run_args = dict(network="redis")
 
     logger.configure()
     tasks.task_vpn_install.delay(
