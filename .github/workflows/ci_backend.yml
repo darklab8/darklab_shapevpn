@@ -25,7 +25,7 @@ jobs:
         run: mypy backend_api
       - name: Isort
         run: isort --check --profile black backend_api
-  unit-tests: # build, push, pull, test?
+  unit-tests:
     runs-on: ubuntu-22.04
     services:
       redis:
@@ -50,6 +50,13 @@ jobs:
           file: backend_api/Dockerfile
           load: true
           tags: darkwind8/shapevpn:backend-latest
+
+      - name: Build server_installer_too
+        uses: docker/build-push-action@v4
+        with:
+          context: server_installer
+          load: true
+          tags: server_installer_autouse
 
       - name: Test
         run: |
