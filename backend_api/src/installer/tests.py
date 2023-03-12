@@ -23,9 +23,11 @@ async def test_ping_example(client: TestClient) -> None:
 
 def test_vpn_install_directly(installer_image: str) -> None:
     ui.install_command = ui.Command.test_install
-    conf.REDIS_RESULT_HOST = "redis"
     conf.INSTALLER_IMAGE = installer_image
-    tasks.InstallServerTask.extra_container_run_args = dict(network="redis")
+
+    # FIX: Not works for CI, only for localhost
+    # conf.REDIS_RESULT_HOST = "redis"
+    # tasks.InstallServerTask.extra_container_run_args = dict(network="redis")
 
     logger.configure()
     task = MagicMock()
@@ -50,9 +52,12 @@ def test_vpn_install_task(
     celery_app: None, celery_worker: None, installer_image: str
 ) -> None:
     ui.install_command = ui.Command.test_install
-    conf.REDIS_RESULT_HOST = "redis"
     conf.INSTALLER_IMAGE = installer_image
-    tasks.InstallServerTask.extra_container_run_args = dict(network="redis")
+
+    # FIX: Not works for CI, only for localhost
+    # conf.REDIS_RESULT_HOST = "redis"
+    # tasks.InstallServerTask.extra_container_run_args = dict(network="redis")
+
     logger.configure()
     tasks.task_vpn_install.delay(
         tasks.ProtectedSerializer.serialize(
