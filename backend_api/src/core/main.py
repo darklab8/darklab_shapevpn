@@ -6,7 +6,6 @@ from server_installer.src.utils import logger
 
 from ..types import PingResponce
 
-
 origins = [
     "http://localhost",
     "http://localhost:8080",
