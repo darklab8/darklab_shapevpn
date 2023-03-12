@@ -57,10 +57,10 @@ jobs:
       #     tags: server_installer_autouse
       - name: Await dind being ready
         run: |
-          ./wait_for_it.sh dind:2375 -t 30
+          sleep 10
       - name: Build installer
         run: |
-          docker build --tag darkwind8/shapevpn:installer-latest server_installer
+          docker build --tag server_installer_autouse server_installer
         env:
           DOCKER_HOST: tcp://dind:2375
       - name: Build backend
