@@ -29,13 +29,13 @@ jobs:
     runs-on: ubuntu-22.04
     container: docker:20.10.21-cli
     services:
-      redis:
-        image: redis
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+      # redis:
+      #   image: redis
+      #   options: >-
+      #     --health-cmd "redis-cli ping"
+      #     --health-interval 10s
+      #     --health-timeout 5s
+      #     --health-retries 5
       dind:
         image: docker:20.10.21-dind
     steps:
@@ -57,16 +57,19 @@ jobs:
       #     tags: server_installer_autouse
       - name: Await dind being ready
         run: |
-          sleep 10
-      - name: Build installer
-        run: |
-          docker build --tag darkwind8/shapevpn:installer-latest server_installer
-      - name: Build backend
-        run: |
-          docker build --tag darkwind8/shapevpn:backend-latest --file backend_api/Dockerfile .
+          sleep 20
+      # - name: Build installer
+      #   run: |
+      #     docker build --tag darkwind8/shapevpn:installer-latest server_installer
+      # - name: Build backend
+      #   run: |
+      #     docker build --tag darkwind8/shapevpn:backend-latest --file backend_api/Dockerfile .
+      # - name: Test
+      #   run: |
+      #     docker run --rm darkwind8/shapevpn:backend-latest pytest backend_api
+      #   env:
+      #     DOCKER_HOST: tcp://dind:2375
+      #     REDIS_RESULT_HOST: redis
       - name: Test
         run: |
-          docker run --rm darkwind8/shapevpn:backend-latest pytest backend_api
-        env:
-          DOCKER_HOST: tcp://dind:2375
-          REDIS_RESULT_HOST: redis
+          docker-compose -f docker-compose.backend.yml run app sh -c "./wait_for_it.sh redis:6379 -t 30 && ./wait_for_it.sh dind:2375 -t 30 && pytest -s backend_api"

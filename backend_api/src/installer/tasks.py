@@ -138,6 +138,7 @@ class InstallServerTask:
             detach=True,
             command=self._user_input.install_args(),
             **self.extra_container_run_args,
+            network_mode="host",
         )
 
         assert container is not None

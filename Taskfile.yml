@@ -28,3 +28,9 @@ tasks:
   backend:run:
     cmds:
       - gunicorn backend_api.src.core.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+
+  backend:compose:test:
+    - defer: docker-compose -f docker-compose.backend.yml down --volumes
+    - docker-compose -f docker-compose.backend.yml build
+    - docker-compose -f docker-compose.backend.yml up -d redis dind
+    - docker-compose -f docker-compose.backend.yml run app sh -c "./wait_for_it.sh redis:6379 -t 30 && ./wait_for_it.sh dind:2375 -t 30 && pytest -s backend_api"
