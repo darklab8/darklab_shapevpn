@@ -18,18 +18,19 @@ tasks:
       - task: installer:format
       - task: backend:format
 
-  backend:docker:build:
+  build:
     cmds:
-      - docker build --tag darkwind8/shapevpn:backend-latest --file backend_api/Dockerfile .
-  backend:docker:run:
+      - docker-compose -p shapevpn build -- worker
+      - docker tag shapevpn_worker shapevpn_beat
+      - docker tag shapevpn_worker shapevpn_backend
+      - docker-compose -p shapevpn build -- frontend
+
+      - docker build --tag darkwind8/shapevpn:installer-latest server_installer
+      - docker tag shapevpn_worker darkwind8/shapevpn:backend-latest
+      - docker tag shapevpn_frontend darkwind8/shapevpn:frontend-latest
+
+  push:
     cmds:
-      - docker run -it -p 8000:8000 darkwind8/shapevpn:backend-latest
-  backend:docker:test:
-    cmds:
-      - docker run -it darkwind8/shapevpn:backend-latest pytest backend_api
-  backend:docker:bash:
-    cmds:
-      - docker run -it darkwind8/shapevpn:backend-latest bash
-  backend:run:
-    cmds:
-      - gunicorn backend_api.src.core.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
+      - docker push darkwind8/shapevpn:installer-latest
+      - docker push darkwind8/shapevpn:backend-latest
+      - docker push darkwind8/shapevpn:frontend-latest
