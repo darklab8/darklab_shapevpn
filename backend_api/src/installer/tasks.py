@@ -1,11 +1,12 @@
 import logging
+import os
 import re
 import secrets
 from typing import Any, Dict, Generator, Protocol, cast
 
 import docker  # type: ignore[import]
 from celery import Task, shared_task
-import os
+
 from backend_api.src import exceptions
 from backend_api.src.core import settings as conf
 from backend_api.src.types import TaskID
