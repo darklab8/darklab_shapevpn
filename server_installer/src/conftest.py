@@ -6,7 +6,7 @@ import pytest
 
 from .storage import redis
 
-test_redis_host = os.environ.get("test_redis_host", "localhost")
+test_redis_host = os.environ.get("REDIS_RESULT_HOST", "localhost")
 
 
 class RedisConnData(TypedDict):

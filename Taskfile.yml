@@ -13,6 +13,11 @@ tasks:
       - isort --profile black backend_api
       - mypy backend_api
 
+  format:
+    cmds:
+      - task: installer:format
+      - task: backend:format
+
   backend:docker:build:
     cmds:
       - docker build --tag darkwind8/shapevpn:backend-latest --file backend_api/Dockerfile .

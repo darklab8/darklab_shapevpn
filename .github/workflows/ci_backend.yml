@@ -50,6 +50,7 @@ jobs:
             docker-compose down --volumes --rmi local
       - name: Test
         run: |
+          docker-compose build -- worker
           docker-compose up -d redis worker beat
           sleep 5
           docker-compose run backend pytest backend_api
