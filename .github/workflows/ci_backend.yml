@@ -30,33 +30,29 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Build and export to Docker
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: backend_api/Dockerfile
-          load: true
-          tags: darkwind8/shapevpn:backend-latest
-
       - name: Build server_installer_too
         uses: docker/build-push-action@v4
         with:
           context: server_installer
           load: true
           tags: server_installer_autouse
+      - name: Build Backend
+        run: |
+          docker-compose -p shapevpn build -- worker
+          docker tag shapevpn_worker shapevpn_beat
+          docker tag shapevpn_worker shapevpn_backend
       - uses: webiny/action-post-run@2.0.1
         with:
           run: |
-            docker-compose down --volumes --rmi local
+            docker-compose -p shapevpn down --volumes --rmi local
       - name: Test Backend
         run: |
-          docker-compose build -- worker
-          docker-compose up -d redis worker beat
+          docker-compose -p shapevpn up -d redis worker beat
           sleep 5
-          docker-compose run backend pytest backend_api
+          docker-compose -p shapevpn run backend pytest backend_api
       - name: Build frontend
         run: |
-          docker-compose build -- frontend
+          docker-compose -p shapevpn build -- frontend
       - name: Test frontend
         run: |
-          docker-compose run frontend npm run test:unit
+          docker-compose -p shapevpn run frontend npm run test:unit
