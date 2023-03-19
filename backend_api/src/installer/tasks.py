@@ -135,23 +135,12 @@ class InstallServerTask:
         self._user_input.redis_port = conf.REDIS_RESULT_PORT
 
     def _launch(self) -> Container:
-        network_args: Dict[str, Any] = {}
-        network = os.environ.get("INSTALLER_NETWORK", "host")
-
-        if network == "":
-            pass
-        elif network == "host":
-            network_args = dict(network_mode="host")
-        else:
-            network_args = dict(network=network)
-        print(f"{network_args=}")
-
         container = self._client.containers.run(
             self._installer_image,
             environment=self._environments,
             detach=True,
             command=self._user_input.install_args(),
-            **network_args,
+            **conf.network_args,
         )
 
         assert container is not None

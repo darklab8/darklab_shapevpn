@@ -29,3 +29,14 @@ REDIS_QUEUE = f"redis://:{REDIS_QUEUE_PASSWORD}@{REDIS_QUEUE_HOST}:{REDIS_QUEUE_
 REDIS_RESULT = (
     f"redis://:{REDIS_RESULT_PASSWORD}@{REDIS_RESULT_HOST}:{REDIS_RESULT_PORT}/0"
 )
+
+INSTALLER_NETWORK = os.environ.get("INSTALLER_NETWORK", "host")
+if INSTALLER_NETWORK == "":
+    network_args = {}
+elif INSTALLER_NETWORK == "host":
+    network_args = dict(network_mode="host")
+else:
+    network_args = dict(network=INSTALLER_NETWORK)
+print(f"{network_args=}")
+
+print(os.environ)
