@@ -15,7 +15,7 @@ configs_folder = Path("configs")
 
 
 def installing_vpn(query: ui.UserInput) -> None:
-    redis_conn = redis.Redis(
+    redis_conn = redis.RedisInstaller(
         redis_host=query.redis_host,
         redis_port=query.redis_port,
         redis_pass=query.redis_pass,
@@ -62,7 +62,7 @@ def installing_vpn(query: ui.UserInput) -> None:
 
 
 def test_installing_vpn(query: ui.UserInput) -> None:
-    redis_conn = redis.Redis(
+    redis_conn = redis.RedisInstaller(
         redis_host=query.redis_host,
         redis_port=query.redis_port,
         redis_pass=query.redis_pass,

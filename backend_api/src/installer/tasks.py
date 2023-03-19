@@ -1,5 +1,6 @@
 import logging
 import re
+import secrets
 from typing import Any, Dict, Generator, Protocol, cast
 
 import docker  # type: ignore[import]
@@ -7,10 +8,11 @@ from celery import Task, shared_task
 
 from backend_api.src import exceptions
 from backend_api.src.core import settings as conf
+from backend_api.src.types import TaskID
 from server_installer.src.interface import ui
 from server_installer.src.storage.config_encryptor import ConfigEncryptor
 
-from . import measurer
+from . import measurer, status
 
 secret_encryptor = ConfigEncryptor(conf.REDIS_SECRET_KEY)
 
@@ -57,7 +59,7 @@ class ContainerLogHandler:
     def __init__(
         self,
         log_stream: ContainerLogs,
-        task_id: str,
+        task_id: TaskID,
         task: Task,
     ):
         self._log_stream = log_stream
@@ -94,14 +96,24 @@ class ContainerLogHandler:
 
             self._task_counter += 1
 
-            self._task.update_state(
-                state="PROGRESS",
-                meta={
-                    "current_number": self._task_counter,
-                    "total": conf.INSTALLER_MAX_TASKS,
-                    "current_name": task_record.group(1),
-                },
+            redis_conn = status.RedisBackend.create(self._task_id)
+
+            redis_conn.set_status(
+                status.StatusData(
+                    state=status.StatusState.PROGRESS,
+                    current_number=self._task_counter,
+                    current_name=task_record.group(1),
+                )
             )
+
+            # self._task.update_state(
+            #     state="PROGRESS",
+            #     meta={
+            #         "current_number": self._task_counter,
+            #         "total": conf.INSTALLER_MAX_TASKS,
+            #         "current_name": task_record.group(1),
+            #     },
+            # )
 
 
 class InstallServerTask:
@@ -112,7 +124,7 @@ class InstallServerTask:
         task: Task,
         start_time: str,
         unique_id: str,
-        task_id: str,
+        task_id: TaskID,
         user_input: ui.UserInput,
     ):
         self._task = task
@@ -183,8 +195,14 @@ import time
 @shared_task(bind=True)
 def debug_my_task(self: Task) -> str:
     print("TASK: starting task")
-    self.update_state(state="PROGRESS")
+    task_id = self.request.id
+    redis_conn = status.RedisBackend.create(TaskID(task_id))
+    redis_conn.set_status(
+        status.StatusData(
+            state=status.StatusState.PROGRESS,
+        )
+    )
     print("TASK: updating task state")
     time.sleep(2)
     print("TASK: finish sleaping")
-    return "123"
+    return task_id

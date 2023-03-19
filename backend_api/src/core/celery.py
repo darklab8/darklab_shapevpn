@@ -5,6 +5,7 @@ from celery.app.task import Task
 
 from backend_api.src.installer import measurer
 from backend_api.src.installer.tasks import InstallServerTask, ProtectedSerializer
+from backend_api.src.types import TaskID
 from server_installer.src.utils import logger
 
 Task.__class_getitem__ = classmethod(  # type: ignore[attr-defined]
@@ -31,13 +32,12 @@ from .tasks import loop_task
 
 seconds_repeat = 30.0
 
-import time
-
 
 @app.task(bind=True)
 def task_vpn_install(
     self: Task, user_input: Dict[str, Any], unique_id: str = "undefined"
 ) -> str:
+    print(123)
     logging.info(f"unique_id={unique_id}, task_vpn_install begins")
     start_time = measurer.start_time_measuring()
     task_id = self.request.id
@@ -46,7 +46,7 @@ def task_vpn_install(
         task=self,
         start_time=start_time,
         unique_id=unique_id,
-        task_id=task_id,
+        task_id=TaskID(task_id),
         user_input=ProtectedSerializer.deserialize(**user_input),
     ).run()
     return f"succesful_installation_{unique_id}"

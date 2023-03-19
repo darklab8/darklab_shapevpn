@@ -1,19 +1,31 @@
 import os
+import secrets
+from typing import Any, Dict, TypedDict
 
 import pytest
 
-from .interface import ui
 from .storage import redis
-from .storage.config_encryptor import ConfigEncryptor
 
 test_redis_host = os.environ.get("test_redis_host", "localhost")
 
 
+class RedisConnData(TypedDict):
+    redis_host: str
+    redis_pass: str
+    redis_port: int
+    task_id: str
+
+
 @pytest.fixture
-def redis_conn() -> redis.Redis:
-    return redis.Redis(
+def redis_conn_data() -> RedisConnData:
+    return dict(
         redis_host=test_redis_host,
         redis_pass="",
         redis_port=6379,
-        task_id="456",
+        task_id=secrets.token_hex(16),
     )
+
+
+@pytest.fixture
+def redis_conn(redis_conn_data: RedisConnData) -> redis.RedisInstaller:
+    return redis.RedisInstaller(**redis_conn_data)

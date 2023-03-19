@@ -1,7 +1,6 @@
-import json
 import logging
 import secrets
-from typing import Optional, TypedDict
+from typing import Any, Dict, Optional, TypedDict
 
 from celery.result import AsyncResult
 from fastapi import APIRouter, Body
@@ -10,12 +9,14 @@ from pydantic import BaseModel
 from backend_api.src.core import settings
 from backend_api.src.core.celery import app as celery_app
 from backend_api.src.core.celery import task_vpn_install
+from backend_api.src.types import TaskID
 from server_installer.src.interface.ui import AuthType, UserInput
 from server_installer.src.storage import redis
 from server_installer.src.storage.config_encryptor import ConfigEncryptor
 from server_installer.src.supported_oses import SupportedOSes
 
 from ..types import PingResponce
+from . import status
 from .code.encryption import AssymetricEncryptor
 from .tasks import ProtectedSerializer
 
@@ -139,25 +140,26 @@ def install_vpn_server(
     return {"task_id": "task.id"}
 
 
-StatusResponse = TypedDict("StatusResponse", {"task_id": str, "meta": dict})
+@router_install.get(
+    path="/{task_id}",
+    responses={
+        200: status.StatusData(state=status.StatusState.PENDING).dict(),
+        200: status.StatusData(
+            state=status.StatusState.PROGRESS,
+            current_name="installing docker",
+            current_number=2,
+        ).dict(),
+        200: status.StatusData(state=status.StatusState.SUCCESS).dict(),
+    },
+)
+def get_status(task_id: str) -> status.StatusData:
+    redis_conn = status.RedisBackend.create(TaskID(task_id))
 
+    stat = redis_conn.get_status()
 
-@router_install.get(path="/{task_id}")
-def get_status(task_id: str) -> StatusResponse:
-    task: AsyncResult = AsyncResult(task_id, app=celery_app)
+    print(f"{stat=}")
 
-    print(f"meta={task.info}")
-
-    try:
-        json.dumps(task.info)
-        meta = task.info
-    except (TypeError, OverflowError):
-        meta = {}
-
-    if meta is None:
-        meta = {}
-
-    return {"task_id": task.status, "meta": meta}
+    return stat
 
 
 StdoutResponse = TypedDict("StdoutResponse", {"stdout": str})
@@ -165,7 +167,7 @@ StdoutResponse = TypedDict("StdoutResponse", {"stdout": str})
 
 @router_install.get(path="/{task_id}/stdout")
 def get_stdout(task_id: str) -> StdoutResponse:
-    redis_conn = redis.Redis(
+    redis_conn = redis.RedisInstaller(
         redis_host=settings.REDIS_RESULT_HOST,
         redis_port=settings.REDIS_RESULT_PORT,
         redis_pass=settings.REDIS_RESULT_PASSWORD,
@@ -184,7 +186,7 @@ ConfigResponse = TypedDict("ConfigResponse", {"configs": str})
 
 @router_install.get(path="/{task_id}/configs")
 def get_configs(task_id: str, data_key: str) -> ConfigResponse:
-    redis_conn = redis.Redis(
+    redis_conn = redis.RedisInstaller(
         redis_host=settings.REDIS_RESULT_HOST,
         redis_port=settings.REDIS_RESULT_PORT,
         redis_pass=settings.REDIS_RESULT_PASSWORD,

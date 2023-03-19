@@ -6,11 +6,11 @@ from fastapi.testclient import TestClient
 
 from backend_api.src.core import settings as conf
 from backend_api.src.core.celery import task_vpn_install
-from backend_api.src.types import PingResponce
+from backend_api.src.types import PingResponce, TaskID
 from server_installer.src.interface import ui
 from server_installer.src.utils import logger
 
-from . import measurer, tasks
+from . import measurer, status, tasks
 
 
 @pytest.mark.asyncio
@@ -27,7 +27,7 @@ def test_vpn_install_directly(installer_image: str) -> None:
     logger.configure()
     task = MagicMock()
     tasks.InstallServerTask(
-        task_id="123",
+        task_id=TaskID("123"),
         task=task,
         unique_id="undefined",
         start_time=measurer.start_time_measuring(),
@@ -50,7 +50,7 @@ def test_vpn_install_task(
     conf.INSTALLER_IMAGE = installer_image
 
     logger.configure()
-    task_vpn_install.delay(
+    task = task_vpn_install.delay(
         tasks.ProtectedSerializer.serialize(
             ui.UserInput(
                 auth_type=ui.AuthType.ssh,
@@ -62,10 +62,9 @@ def test_vpn_install_task(
                 task_id="defined_to_trigger_recording_to_redis",
             )
         ),
-    ).get(timeout=30)
+    )
 
-
-from celery.result import AsyncResult
+    task.get(timeout=10)
 
 
 def test_check_task_status(celery_app: None, celery_worker: None) -> None:
@@ -76,10 +75,11 @@ def test_check_task_status(celery_app: None, celery_worker: None) -> None:
     print(f"{task.id}")
 
     for _ in range(5):
-        state = AsyncResult(task.id).status
+        redis_conn = status.RedisBackend.create(TaskID(task.id))
+        state = redis_conn.get_status()
         print(f"{state=}")
-        if state == "PROGRESS":
+        if state.state == status.StatusState.PROGRESS:
             break
         time.sleep(1)
     else:
-        assert False, "progress state is not found"
+        assert False, f"progress state is not found, {state=}"
