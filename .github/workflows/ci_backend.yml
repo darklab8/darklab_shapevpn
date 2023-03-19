@@ -27,16 +27,6 @@ jobs:
         run: isort --check --profile black backend_api
   unit-tests:
     runs-on: ubuntu-22.04
-    services:
-      redis:
-        image: redis
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 6379:6379
     steps:
       - uses: actions/checkout@v3
 
@@ -54,12 +44,12 @@ jobs:
           context: server_installer
           load: true
           tags: server_installer_autouse
-
+      - uses: webiny/action-post-run@2.0.1
+        with:
+          run: |
+            docker-compose down --volumes --rmi local
       - name: Test
         run: |
-          docker run --rm \
-            -v /var/run/docker.sock:/var/run/docker.sock \
-            -e REDIS_QUEUE_HOST=redis \
-            -e REDIS_RESULT_HOST=redis \
-            -e test_redis_host=redis \
-            darkwind8/shapevpn:backend-latest pytest backend_api
+          docker-compose up -d redis worker beat
+          sleep 5
+          docker-compose run backend pytest backend_api

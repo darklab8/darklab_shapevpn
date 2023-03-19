@@ -11,6 +11,7 @@ x-definitions:
     REDIS_QUEUE_HOST: redis
     REDIS_RESULT_HOST: redis
     INSTALLER_NETWORK: shapevpn
+    test_redis_host: redis
 
 version: '3.8'
 services:
