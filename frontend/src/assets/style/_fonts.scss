@@ -1,0 +1,28 @@
+@mixin font-main($family: "default",
+  $weight: normal,
+  $color: $color-font-main,
+  $size: 14px,
+  $height: 100%,
+  $spacing: normal,
+  $style: normal,
+  $size-enabled: true,
+  $color-enabled: true,
+  $weight-enabled: true) {
+  font-family: Verdana, Arial, Geneva, Tahoma, sans-serif;
+  font-style: $style;
+
+  line-height: $height;
+  letter-spacing: $spacing;
+
+  @if $weight-enabled {
+    font-weight: $weight;
+  }
+
+  @if $size-enabled {
+    font-size: $size;
+  }
+
+  @if $color-enabled {
+    color: $color;
+  }
+}

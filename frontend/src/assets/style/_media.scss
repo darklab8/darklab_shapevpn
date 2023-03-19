@@ -1,0 +1,88 @@
+// designer makes for those versions:
+// 320 568
+// 768 1024
+// 1920 1024
+
+$width-delimiter-mobile-tablet: 600px;
+$width-delimiter-tablet-pc: 1000px;
+
+@mixin media-mobile {
+    @media only screen and (max-width: $width-delimiter-mobile-tablet) {
+        @content;
+    }
+}
+
+@mixin media-tablet {
+    @media only screen and (min-width: ($width-delimiter-mobile-tablet + 1px)) and (max-width: $width-delimiter-tablet-pc) {
+        @content;
+    }
+}
+
+@mixin media-pc {
+    @media only screen and (min-width: ($width-delimiter-tablet-pc + 1px)) {
+        @content;
+    }
+}
+
+$height-delimiter-mobile-tablet: 600px;
+$height-delimiter-tablet-pc: 800px;
+
+@mixin media-height-mobile {
+    @media only screen and (max-height: $height-delimiter-mobile-tablet) {
+        @content;
+    }
+}
+
+@mixin media-height-tablet {
+    @media only screen and (min-height: ($height-delimiter-mobile-tablet + 1px)) and (max-height: $height-delimiter-tablet-pc) {
+        @content;
+    }
+}
+
+@mixin media-height-pc {
+    @media only screen and (min-height: ($height-delimiter-tablet-pc + 1px)) {
+        @content;
+    }
+}
+
+@mixin media-controllable-mobile($width) {
+    @media only screen and (max-width: $width) {
+        @content;
+    }
+}
+
+@mixin media-controllable-tablet($width1, $width2) {
+    @media only screen and (min-width: ($width1 + 1px)) and (max-width: $width2) {
+        @content;
+    }
+}
+
+@mixin media-controllable-pc($width) {
+    @media only screen and (min-width: ($width + 1px)) {
+        @content;
+    }
+}
+
+@mixin media-width-split-small($width) {
+    @media only screen and (max-width: $width) {
+        @content;
+    }
+}
+
+@mixin media-width-split-big($width) {
+    @media only screen and (min-width: ($width + 1px)) {
+        @content;
+    }
+}
+
+@mixin media-height-split-small($height) {
+    @media only screen and (max-height: $height) {
+        @content;
+    }
+}
+
+@mixin media-height-split-big($height) {
+    @media only screen and (min-height: ($height + 1px)) {
+        @content;
+    }
+}

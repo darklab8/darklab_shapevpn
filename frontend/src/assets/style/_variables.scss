@@ -1,0 +1,38 @@
+// First page
+
+$color-white: #fff;
+$color-green: #4da94e;
+$color-black: #000;
+$color-gray3: #c8d0d4;
+$color-light-gray: lighten(#a8a8a8, 15%);
+$color-light-gray_2: #818181;
+$color-light-gray_3: #f4f5f6;
+$color-blue: rgb(94, 110, 250); // #164283;
+$color-dark-gray: #242424;
+$color-red: #ea4335;
+$color-font-main: #2b2b2b;
+$color-background-block-original: #f5f5f5;
+$color-background-block: darken($color-background-block-original, 1%);
+
+$color-background-install: $color-light-gray_3;
+
+$button-create-vpn-height: 44px;
+$button-border-size: 2px;
+$button-height-global: 44px;
+$button-font-size: 15px;
+$button-border-gray: #b0b0b0;
+
+$padding-main: 20px;
+
+$margin-main-left: 5%;
+$margin-main-right: 5%;
+$margin-main-top: 5%;
+$margin-main-bottom: 5%;
+
+$color-sidebar-disabled: $color-gray3;
+$color-progress-side-bar: $color-gray3;
+
+$heading_height: 100%;
+$heading-margin-bottom: 33px;
+
+$margin-mobile-border: 30px;

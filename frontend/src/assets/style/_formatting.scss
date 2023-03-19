@@ -1,0 +1,98 @@
+@mixin instruction_string($scroll: null) {
+  &-label {
+    @include font-main($size: 16px, $height: 123%, $weight: 600);
+  }
+
+  &-instruction {
+    margin-top: 5px;
+    margin-bottom: 25px;
+    background: #394145; //#42586e;
+
+    &-inside {
+      @if ($scroll != null) {
+        overflow-x: scroll;
+      }
+      padding: 10px;
+    }
+
+    border-radius: 3px;
+    @include font-main($color: $color-white, $size: 15px, $height: 123%);
+    padding: 15px;
+  }
+}
+
+@mixin link-reset() {
+  color: inherit;
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+  &:visited {
+    color: inherit;
+    text-decoration: none;
+  }
+  &:active {
+    color: inherit;
+    text-decoration: none;
+  }
+  &:link {
+    color: inherit;
+    text-decoration: none;
+  }
+  cursor: pointer;
+}
+
+@mixin style-links() {
+  $color: darken($color-blue, 10%);
+
+  color: $color;
+  text-decoration: none;
+  @include link-reset();
+}
+
+@mixin instruction() {
+  @include font-main($size: 16px, $height: 158%);
+
+  .link {
+    @include style-links();
+  }
+
+  h1 {
+    @include font-main($size: 24px, $weight: 500, $height: 123%);
+    margin-bottom: 40px;
+  }
+
+  .sub-numbered-lists {
+    ol {
+      counter-reset: item;
+    }
+    li {
+      display: block;
+    }
+    li:before {
+      content: counters(item, ".") ". ";
+      counter-increment: item;
+    }
+  }
+
+  .code {
+    @include instruction_string($scroll: true);
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .space-between-first-level-li > ol > li {
+    margin-top: 10px;
+  }
+  .unordered-signs > ol ol {
+    list-style-type: disc;
+  }
+
+  .block {
+    padding-bottom: 60px;
+    padding-top: 60px;
+
+    &-inside {
+    }
+  }
+}

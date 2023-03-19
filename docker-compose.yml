@@ -38,6 +38,11 @@ services:
     environment:
       <<: *x-env-args
     command: celery -A backend_api.src.core.celery worker
+  frontend:
+    build: frontend
+    command: npm run serve
+    environment:
+      VUE_APP_BACKEND_URL: http://backend:8000
 
 networks:
   default:

@@ -48,9 +48,15 @@ jobs:
         with:
           run: |
             docker-compose down --volumes --rmi local
-      - name: Test
+      - name: Test Backend
         run: |
           docker-compose build -- worker
           docker-compose up -d redis worker beat
           sleep 5
           docker-compose run backend pytest backend_api
+      - name: Build frontend
+        run: |
+          docker-compose build -- frontend
+      - name: Test frontend
+        run: |
+          docker-compose run frontend npm run test:unit

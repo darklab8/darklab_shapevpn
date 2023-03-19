@@ -1,0 +1,32 @@
+@mixin white-block-width() {
+  @include media-width-split-small(900px) {
+    width: 100%;
+  }
+
+  @include media-width-split-big(900px) {
+    @include margin-auto($max-width: 1200px);
+  }
+}
+
+@mixin heading_main-width() {
+  @include media-width-split-small(900px) {
+    width: 100%;
+  }
+
+  @include media-width-split-big(900px) {
+    left: -80px;
+    width: calc(100% + 80px);
+  }
+}
+
+@mixin white-block-wrapper-margins() {
+  @include media-width-split-small(900px) {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  @include media-width-split-big(900px) {
+    margin-left: 130px;
+    margin-right: 130px;
+  }
+}

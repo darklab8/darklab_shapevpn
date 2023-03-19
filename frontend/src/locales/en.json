@@ -1,0 +1,317 @@
+{
+  "message": "hello i18n !!",
+  "interpolation_test": "Hello friend, {name}! Constant Vigillance!",
+  "home": {
+    "intro": {
+      "create_VPN_on_your_server": "Create VPN on your own server",
+      "vpn_constructor": "VPN CONSTRUCTOR",
+      "create_personal_vpn": "Create personal VPN"
+    },
+    "button_create": {
+      "start": "start VPN installation"
+    },
+    "white_field": {
+      "main": {
+        "what_u_receive": "What do you receive when you launch a personal VPN service?",
+        "where_to_buy_server": "Where to buy a server?",
+        "we_found_best_providers": "We preselected the best server provider for you, where you can obtain a server in order to get started.",
+        "most_frequent_questions": "Frequently Asked Questions"
+      },
+      "introFAQ": {
+        "1": {
+          "question": "What's the main advantage of the service?",
+          "answer": "Regular VPN providers are untrustworthy when it comes to protecting your data. They collect data about you and sell it or give it up at the first demand from a government, similar to Internet Service Providers. You must choose which one is more likely to be trustworthy and has fewer chances of data leakage. Because you utilize your own server, there are no such issues with our service."
+        },
+        "2": {
+          "question": "Can I use one installed VPN server for several devices and users?",
+          "answer": "Yes, if each device is using a distinct configuration file. We supply five configuration files by default for each server."
+        },
+        "3": {
+          "question": "Can I use the same configurational file on several devices?",
+          "answer": "That's not recommended. Because if two devices have an active internet connection at the same time, they would be interfering with each other."
+        },
+        "4": {
+          "question": "How much is it going to cost me to use ShapeVPN?",
+          "answer": "Although our service is free, you are using your own server. As a result, you will incur expenses equal to the set tariff at the chosen cloud provider. There are no further payments made beyond that."
+        },
+        "5": {
+          "question": "Where to buy a server in order to start using the personal VPN?",
+          "answer": "We did a thorough search among all server providers, finding the one that satisfies our quality requirements. Vultr met them all:<ol><li>Having hourly payments as you go, instead of monthly payments</li><li>No setup fees</li><li>Friendly and comfortable interface</li><li>Low costs</li><li>A lot of available locations for servers</li><li>Automated nearly instant server creation and destruction</li>"
+        },
+        "6": {
+          "question": "Can I reuse a server that has a lot of installed programs already?",
+          "answer": "No, it is not recommended even if it is possible. We recommend using a freshly installed operational system to avoid any conflicts with already existing programs. As an exception, in 99 cases out of 100, it is possible to reuse the server, which was used to install ShapeVPN before. A newer installation will just override the old one."
+        },
+        "7": {
+          "question": "What are the used encrypting protocols?",
+          "answer": "Wireguard is made out of the following components:<ol><li>ChaCha20 for symmetric encryption</li><li>authenticated with Poly1305, using RFC7539's AEAD construction</li><li>Curve25519 for ECDH</li><li>BLAKE2s for hashing and keyed hashing, described in RFC7693</li><li>SipHash24 for hashtable keys</li><li>HKDF for key derivation, as described in RFC5869</li><li>UDP — as a transport protocol</li></ol>"
+        },
+        "8": {
+          "question": "What ensures security?",
+          "answer": "We ensured security from external and internal threats. Our file systems are locked into a read-only state. The service uses temporally generated unique keys to encrypt and decrypt the data through its usage for each installation. Any installing data is automatically erased when the service job is completed."
+        }
+      },
+      "provider_section": {
+        "site_in_next_langs": "Supported languages:",
+        "langs": {
+          "english": "English",
+          "spanish": "Spanish",
+          "german": "Deutsch",
+          "portug": "Portuguese",
+          "korean": "Korean"
+        },
+        "payment_methods": "Payment methods",
+        "buttons": {
+          "to_go_to_vultr": "Sign Up at Vultr",
+          "to_go_to_linode": "Sign Up at Linode",
+          "to_go_to_provider": "Sign Up at provider's site",
+          "to_look_instruction": "Get instruction"
+        }
+      },
+      "ThreeThingsInARow": {
+        "1": {
+          "title": "Easy to setup",
+          "msg": "We simplified the installation process to make it as quick as possible. We provide detailed instructions on how to acquire a server. After that, all that is left to do is enter the server login data, and everything will be set up automatically."
+        },
+        "2": {
+          "title": "Fast and secure connection",
+          "msg": "Wireguard has an efficient code base of under 4000 lines of code, which is 25 times smaller than the size of OpenVPN. According to a quote from Linus Torvalds: \"compared to the horrors that are OpenVPN and IPSec, it's a work of art.\" The size of the Wireguard has made its security features highly successful during the auditing process. It is 20% faster than IPSec, and 4X faster than OpenVPN."
+        },
+        "3": {
+          "title": "Data protection",
+          "msg": "ShapeVPN protects your internet connection from surveillance of any person or device between your device and your server. VPN prevents data gathering about your visited web pages by Internet Service Providers and prevents data leaks of any unencrypted data."
+        }
+      },
+      "TwoColumnFirstPhrases": {
+        "msg": "We aren't VPN as a service. So you are not connecting to our servers for that.<br><br>You set up your own server for our application usage or acquire it from cloud providers."
+      },
+      "AreYouReadyToStart": {
+        "title": "Are you ready to launch your own VPN service?"
+      }
+    }
+  },
+  "install": {
+    "MainField": {
+      "installation_requires_server": "Installing VPN requires a server",
+      "choose_provider": "Choose provider to buy a server",
+      "we_chose_best_providers_for_you": "We preselected the best server provider for you, where you can obtain a server",
+      "begin_VPN_installation_to_server": "Begin VPN installation on server",
+      "to_install_VPN_to_server": "Install VPN on server",
+      "download_config_files": "Download configurational files",
+      "download_client_application": "Download client application"
+    },
+    "intro": {
+      "i_have_no_server": {
+        "title": "I <strong>don't have</strong> a server",
+        "notes": "There is no server beyond your local network, which you can use to protect your traffic from Internet Service Provider."
+      },
+      "i_have_server": {
+        "title": "I <strong>have</strong> a server",
+        "notes": "It is necessary to use a freshly installed operational system with a distribution like Ubuntu 20.04"
+      }
+    },
+    "DownloadClient": {
+      "download_application": "Download application"
+    },
+    "DownloadClientButton": {
+      "download": {
+        "windows": "Download Windows installer",
+        "macos": "Download at Mac App Store",
+        "ios": "Download at App Store",
+        "android": "Download at Play Store",
+        "linux": {
+          "full_instruction_checked_in_ubuntu": "Full instruction for Ubuntu 20.04",
+          "install_client_for_chosen_distro": "Install a client for appropriate Linux distribution. for Ubuntu 20 it would be the next command:",
+          "put_downloaded_file_at_the_address_in_filesystem": "Move the downloaded configurational file to the config folder",
+          "launch_daemon": "Launch a daemon",
+          "make_an_autolaunch_during_user_startup": "Enable autostart on user startup",
+          "instruction_for_other_distros": "Instruction to install client app for different Linux distros"
+        }
+      }
+    },
+    "DownloadConfigs": {
+      "user": "User #{number}",
+      "read_QR_code": "Read configurational file #{number} through <br>QR-code at your mobile phone",
+      "download_config_file": "Download configurational file {filename}",
+      "download_config_files_and_QR_codes_for_5_users": "Download configurational files<br>and QR codes for 5 users",
+      "or": "or"
+    },
+    "InputServerForm": {
+      "insert_details_about_your_server": "Insert details about your server:",
+      "advanced_features": "Advanced features",
+      "SSS_key_of_the_server": "SSH key",
+      "server_password": "Password",
+      "operational_system": "Operational system",
+      "ip_address": "IP address",
+      "login": "Login",
+      "server_ssh_port": "Server SSH port",
+      "server_vpn_port": "Server VPN service port",
+      "SSH_public_key": "SSH public key",
+      "password": "Password",
+      "install_vpn_to_server": "Install VPN on server",
+      "installation_has_been_completed": "Installation has been completed",
+      "go_to_config_downloading": "Go to configurational files download.",
+      "something_went_wrong": "Something went wrong, <span style='color:blue;text-decoration:underline;cursor: pointer'>check logs</span> for details.",
+      "empty_field": "One of the fields is empty. The installation can not be started.",
+      "validators": {
+        "invalid_ip": "Invalid IP address or domain name",
+        "invalid_login": "Invalid username for linux server",
+        "invalid_password": "Invalid password, only characters from the next are allowed: {allowed_symbols}",
+        "invalid_number": "Not a Number"
+      },
+      "copied": "copied"
+    },
+    "StepBar": {
+      "server_buying": "Get <br />server",
+      "server_installation": "Install",
+      "download_configs": "Download <br />config files",
+      "download_client": "Download <br />client app"
+    },
+    "InstructionProviderChoice": {
+      "go_to_provider_X": "Sign Up at {provider}"
+    },
+    "VideoInstruction": {
+      "title": "Instruction on how to buy a server at"
+    },
+    "InstructionForServer": {
+      "registration": {
+        "registration_in_X": "Sign Up at {provider}",
+        "go_to_site_and_press": {
+          "goto": "Go to",
+          "site": "the site",
+          "and_press_the_button": "and press the blue button \"Sign Up\" at the top-right."
+        },
+        "vultr": {
+          "depending_on_size_of_the_screen": "Depending on the size of your screen, the button may be hidden behind your personal profile or menu button out of the three horizontal lines.",
+          "in_form_account_create_insert_email": "Insert your email address and new password in the form \"Create Account\".",
+          "note_password_must_contain_at_least": "Please note the password must contain at least one uppercase, one lowercase, one number, and at least 10 symbols.",
+          "if_necessary_pass_captcha": "It is possible, that you will encounter the need to pass Captcha.",
+          "when_the_form_is_completed": "When the form fields were completed, press \"Create Account\".",
+          "in_billing_section": "In the billing section opened by default, update your payment details.",
+          "possible_to_use_payment_cards": "It is possible to pay using: Visa, Master Card, American Express, Discover, JCB, Union Pay.",
+          "also_possible_to_use": "There are also options to pay using Paypal, Alipay, and Cryptocurrencies such as Bitcoin.",
+          "possible_verification_in_tech_support_is_required": "In some instances, the account may need to be verified by the cloud provider's tech support."
+        },
+        "linode": {
+          "press_sign_up": "Press \"Sign Up\"",
+          "depending_on_the_screen_size": "Depending on the size of your screen, the button can be hidden behind the menu button out of three horizontal lines",
+          "insert_account_details": "Insert account details",
+          "email_and_new_password": "Email address and new password",
+          "or_use_oauth": "Or sign up with Google / Github",
+          "go_to_link_in_email": "Click the link in the received email and press \"Confirm\" to proceed with registration to a next step",
+          "insert_payment_details": "Insert payment details, your credit or debit card for default payments"
+        }
+      },
+      "server_buying": {
+        "server_buying_in_X": "How to buy a server at {provider}",
+        "vultr": {
+          "choose_cloud_compute": "In the section \"Choose Server\", select \"Cloud Compute\".",
+          "choose_desired_loc": "Choose the desired location from the list for your VPN server.",
+          "choose_ubuntu": "In the section \"Server Type\", select Ubuntu 20.04 x64.",
+          "choose_tarif": "In the section \"Server Size\", choose the minimal plan - 5$ per month.",
+          "choose_ssh_keys": "In the section \"SSH keys\", add our public ssh key from the shapevpn website. After that, click it to select for the server.",
+          "choose_server_name": "In the section \"Server Hostname & Label\" insert any server name.",
+          "press_deploy": "Press \"Deploy Now\".",
+          "wait_for_completion": "Standby until server creation (around 30 seconds).",
+          "copy_ip": "Copy appeared IP address right below the server, which looks like: 78.141.230.232."
+        },
+        "linode": {
+          "press_create": "In the section\"Linodes\" press \"Create Linode\".",
+          "choose_distro": "In the section \"Choose a Distribution\", select Ubuntu 20.04.",
+          "choose_location": "In the section \"Region\", choose the desired location for the VPN server.",
+          "choose_tarif": "In the section \"Linode Plan\" choose Shared CPU and Nanode 1 GB.",
+          "choose_password": "In the section \"Root Password\", insert any random value.",
+          "choose_ssh_keys": "In the section \"SSH keys\", press to add a key, insert any name and the value:",
+          "wait_to_complete": "Standby while the server is raising (around 30 seconds). Once it reached the state RUNNING, copy appeared IP address looking like 178.79.154.116."
+        }
+      },
+      "vpn_installation": {
+        "title": "Server VPN installation",
+        "return_to_page_with_server_install": "Return to page \"{server_installation}\".",
+        "choose_I_have_server": "Choose \"{i_have_a_server}\".",
+        "in_section_to_insert_data": "In the section \"{install_VPN_on_server}\".",
+        "choose_SSH": "Select SSH.",
+        "insert_copied_IP": "Insert the copied server IP address.",
+        "leave_login_as_default_root": "leave login as default \"root\".",
+        "press_submit": "Press on \"{submit}\".",
+        "wait_for_installation": "Standby until the server installation is complete.",
+        "in_section_to_download_configs_do_it": "In the section \"{download_configs}\", download configurational files.",
+        "in_section_to_download_client_app": "Select your device type (Windows, Smartphone(Android, IOS), macOS, and e.t.c.",
+        "choose_device_type": "Download and install the client application.",
+        "apply_configs_to_client": "Apply configurational file to the client."
+      }
+    }
+  },
+  "shared": {
+    "nav_bar": {
+      "support_project": "Donate",
+      "help": "Get Help",
+      "server_buy": "Get server",
+      "server_install": "Install",
+      "FAQ": "FAQ",
+      "home": "home"
+    },
+    "BlackFooter": {
+      "contacts": "Contacts",
+      "info": "Information",
+      "extra": "Extras",
+      "terms_of_usage": "Terms of service",
+      "to_support_the_project": "Donate",
+      "data_privacy": "Data Privacy"
+    }
+  },
+  "politics": {
+    "title": "Terms of Service",
+    "first_phrase": "ShapeVPN software allows you to easily set up, operate and manage your own private VPN server on your own infrastructure or on  a third party service provider. It also allows those who you invite to use it, to connect through it to more securely access the open web.",
+    "second_phrase": "By accessing, downloading, or using ShapeVPN, you are agreeing to terms of services below:",
+    "statements": {
+      "1": {
+        "heading": "Using our Services",
+        "content": "Don’t misuse our Services. For example, don’t interfere with our Services or try to access them using a method other than the interface and the instructions that we provide. You may use our Services only as permitted by law, including applicable export and re-export control laws and regulations. We may suspend or stop providing our Services to you if you do not comply with our terms or policies or if we are investigating suspected misconduct.<br>Using our Services does not give you ownership of any intellectual property rights in our Services or the content you access. You may not use content from our Services unless you obtain permission from its owner or are otherwise permitted by law. These terms do not grant you the right to use any branding or logos used in our Services. Don’t remove, obscure, or alter any legal notices displayed in or along with our Services."
+      },
+      "2": {
+        "heading": "Your Content in our Services",
+        "content": "When you upload, submit, store, send or receive content to or through our Services, you give ShapeVPN (and those we work with) a worldwide license to use, host, store, reproduce, modify, create derivative works (such as those resulting from translations, adaptations or other changes we make so that your content works better with our Services), communicate, publish, publicly perform, publicly display and distribute such content. The rights you grant in this license are for the limited purpose of operating, promoting, and improving our Services, and to develop new ones. This license continues even if you stop using our Services. Some Services may offer you ways to access and remove content that has been provided to that Service. Also, in some of our Services, there are terms or settings that narrow the scope of our use of the content submitted in those Services. Make sure you have the necessary rights to grant us this license for any content that you submit to our Services.<br>Your content. Content that you upload, submit, store, send or receive through Your Server is not uploaded or submitted to ShapeVPN, and is therefore not subject to the license . We do not know what you are sending with ShapeVPN."
+      },
+      "3": {
+        "heading": "Our Warranties and Disclaimers",
+        "content": "We provide our Services using a commercially reasonable level of skill and care and we hope that you will enjoy using them. But there are certain things that we don’t promise about our Services.<br>Other than as expressly set out in these terms or additional terms, neither ShapeVPN nor its parent company, affiliates, suppliers or distributors make any specific promises about the services. For example, we don’t make any commitments about the content within the services, the specific functions of the services, or their reliability, availability, or ability to meet your needs. We provide the services “as is”.<br>Some jurisdictions provide for certain warranties, like the implied warranty of merchantability, fitness for a particular purpose and non-infringement. To the extent permitted by law, we exclude all warranties."
+      },
+      "4": {
+        "heading": "Liability for our Services",
+        "content": "When permitted by law, ShapeVPN, its parent company, affiliates, suppliers and distributors, will not be responsible for lost profits, revenues, or data, financial losses or indirect, special, consequential, exemplary, or punitive damages.<br>To the extent permitted by law, the total liability of ShapeVPN, its parent company, affiliaes, suppliers and distributors, for any claims under these terms, including for any implied warranties, is limited to the amount you paid us to use the services (or, if we choose, to supplying you the services again).<br>In all cases, ShapeVPN, and its parent company, affiliates, suppliers and distributors, will not be liable for any loss or damage that is not reasonably foreseeable.<br>ShapeVPN has no control over, and assumes no responsibility for the services provided by Service Providers. You expressly relieve ShapeVPN from any and all liability arising from use of Your Server. Accordingly, we encourage you to read the terms and conditions and privacy policy of the Service Provider. In addition, you are responsible for complying with any applicable laws, regulations and licensing requirements associated with the operation of Your Server as a VPN."
+      },
+      "5": {
+        "heading": "Business uses of our Services",
+        "content": "If you are using our Services on behalf of a business, that business accepts these terms. It will hold harmless and indemnify ShapeVPN, its parent company and their respective affiliates, officers, agents, and employees from any claim, suit or action arising from or related to the use of the Services or violation of these terms, including any liability or expense arising from claims, losses, damages, suits, judgments, litigation costs and attorneys’ fees."
+      },
+      "6": {
+        "heading": "Assumption of Risk.",
+        "content": "You may use ShapeVPN and invite others to use ShapeVPN only as permitted by law. We encourage you to check local laws and regulations before using ShapeVPN."
+      },
+      "7": {
+        "heading": "Copyright Notices",
+        "content": "ShapeVPN does not host or store or any content. Any notices of alleged copyright infringement or other legal notices relating to content hosted, stored, sent or received via Your Server should be dealt with by you or directed to your Service Provider."
+      },
+      "8": {
+        "heading": "About these Terms",
+        "content": "We may modify these terms or any additional terms that apply to a Service to, for example, reflect changes to the law or changes to our Services. You should look at the terms regularly. We’ll post notice of modifications to these terms on this page. We’ll post notice of modified additional terms in the applicable Service. Changes will not apply retroactively and will become effective no sooner than fourteen days after they are posted. However, changes addressing new functions for a Service or changes made for legal reasons will be effective immediately. If you do not agree to the modified terms for a Service, you should discontinue your use of that Service.<br>If there is a conflict between these terms and the additional terms, the additional terms will control for that conflict.<br>These terms control the relationship between ShapeVPN and you. They do not create any third party beneficiary rights.<br>If you do not comply with these terms, and we don’t take action right away, this doesn’t mean that we are giving up any rights that we may have (such as taking action in the future).<br>If it turns out that a particular term is not enforceable, this will not affect any other terms."
+      }
+    }
+  },
+  "data": {
+    "title": "Data Privacy",
+    "we_obtain": {
+      "title": "Information We Obtain",
+      "1": "We collect anonymous metrics about visited our web site pages and other actions happening during our web site usage"
+    },
+    "we_dont_obtain": {
+      "title": "Information We Do Not Obtain",
+      "1": "We don't collect any metrics from your server. Once you installed software and closed the website, there is no any metrics gathering from you.",
+      "2": "ShapeVPN also doesn’t collect information about any other websites you visit or with whom or what you communicate."
+    }
+  },
+  "not_found": {
+    "msg": "Ops, we did not find the requested page."
+  }
+}

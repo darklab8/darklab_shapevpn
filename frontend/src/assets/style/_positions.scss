@@ -1,0 +1,14 @@
+@mixin margin-auto($max-width: 1200px) {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    max-width: $max-width;
+}
+
+@mixin flex-center() {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+}

@@ -1,0 +1,22 @@
+FROM node:16.14.0-bullseye-slim AS build
+
+COPY package-lock.json package-lock.json
+COPY package.json package.json
+RUN npm install
+
+COPY src/ src/
+COPY tests/ tests/
+COPY public/ public/
+COPY .eslintignore .eslintignore
+COPY .eslintrc.js .eslintrc.js
+COPY babel.config.js babel.config.js
+COPY cypress.json cypress.json
+COPY jest.config.js jest.config.js
+COPY jsconfig.json jsconfig.json
+COPY vue.config.js vue.config.js
+
+ARG VUE_APP_BACKEND_URL
+ARG NODE_ENV
+
+COPY . .
+RUN npm run build
