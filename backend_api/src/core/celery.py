@@ -35,7 +35,10 @@ seconds_repeat = 30.0
 
 @app.task(bind=True)
 def task_vpn_install(
-    self: Task, user_input: Dict[str, Any], unique_id: str = "undefined"
+    self: Task,
+    user_input: Dict[str, Any],
+    unique_id: str = "undefined",
+    installer_image: str = conf.INSTALLER_IMAGE,
 ) -> str:
     print(123)
     logging.info(f"unique_id={unique_id}, task_vpn_install begins")
@@ -48,6 +51,7 @@ def task_vpn_install(
         unique_id=unique_id,
         task_id=TaskID(task_id),
         user_input=ProtectedSerializer.deserialize(**user_input),
+        installer_image=installer_image,
     ).run()
     return f"succesful_installation_{unique_id}"
 

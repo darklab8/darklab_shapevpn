@@ -5,7 +5,7 @@ from typing import Any, Dict, Generator, Protocol, cast
 
 import docker  # type: ignore[import]
 from celery import Task, shared_task
-
+import os
 from backend_api.src import exceptions
 from backend_api.src.core import settings as conf
 from backend_api.src.types import TaskID
@@ -106,19 +106,8 @@ class ContainerLogHandler:
                 )
             )
 
-            # self._task.update_state(
-            #     state="PROGRESS",
-            #     meta={
-            #         "current_number": self._task_counter,
-            #         "total": conf.INSTALLER_MAX_TASKS,
-            #         "current_name": task_record.group(1),
-            #     },
-            # )
-
 
 class InstallServerTask:
-    extra_container_run_args: dict[str, Any] = {}
-
     def __init__(
         self,
         task: Task,
@@ -126,6 +115,7 @@ class InstallServerTask:
         unique_id: str,
         task_id: TaskID,
         user_input: ui.UserInput,
+        installer_image: str,
     ):
         self._task = task
         self._start_time = start_time
@@ -135,6 +125,7 @@ class InstallServerTask:
 
         self._client = docker.from_env()
         self._environments = dict(task_id=self._task_id)
+        self._installer_image = installer_image
 
     def _setup(self) -> None:
         logging.info(f"unique_id={self._unique_id}, running containers.run")
@@ -144,13 +135,23 @@ class InstallServerTask:
         self._user_input.redis_port = conf.REDIS_RESULT_PORT
 
     def _launch(self) -> Container:
+        network_args: Dict[str, Any] = {}
+        network = os.environ.get("INSTALLER_NETWORK", "host")
+
+        if network == "":
+            pass
+        elif network == "host":
+            network_args = dict(network_mode="host")
+        else:
+            network_args = dict(network=network)
+        print(f"{network_args=}")
+
         container = self._client.containers.run(
-            conf.INSTALLER_IMAGE,
+            self._installer_image,
             environment=self._environments,
             detach=True,
             command=self._user_input.install_args(),
-            **self.extra_container_run_args,
-            network_mode="host",
+            **network_args,
         )
 
         assert container is not None

@@ -21,9 +21,6 @@ async def test_ping_example(client: TestClient) -> None:
 
 
 def test_vpn_install_directly(installer_image: str) -> None:
-    ui.install_command = ui.Command.test_install
-    conf.INSTALLER_IMAGE = installer_image
-
     logger.configure()
     task = MagicMock()
     tasks.InstallServerTask(
@@ -32,6 +29,7 @@ def test_vpn_install_directly(installer_image: str) -> None:
         unique_id="undefined",
         start_time=measurer.start_time_measuring(),
         user_input=ui.UserInput(
+            command=ui.Command.test_install,
             auth_type=ui.AuthType.ssh,
             ip="123.123.123.123",
             private_key="123",
@@ -40,19 +38,18 @@ def test_vpn_install_directly(installer_image: str) -> None:
             user="root",
             task_id="defined_to_trigger_recording_to_redis",
         ),
+        installer_image=installer_image,
     ).run()
 
 
 def test_vpn_install_task(
     celery_app: None, celery_worker: None, installer_image: str
 ) -> None:
-    ui.install_command = ui.Command.test_install
-    conf.INSTALLER_IMAGE = installer_image
-
     logger.configure()
     task = task_vpn_install.delay(
         tasks.ProtectedSerializer.serialize(
             ui.UserInput(
+                command=ui.Command.test_install,
                 auth_type=ui.AuthType.ssh,
                 ip="123.123.123.123",
                 private_key="123",
@@ -62,6 +59,7 @@ def test_vpn_install_task(
                 task_id="defined_to_trigger_recording_to_redis",
             )
         ),
+        installer_image=installer_image,
     )
 
     task.get(timeout=10)

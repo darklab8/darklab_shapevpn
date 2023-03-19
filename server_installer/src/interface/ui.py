@@ -55,4 +55,4 @@ class UserInput(RedisInput, AuthInput, WireguardInput):
         return args
 
     def install_args(self) -> List[str]:
-        return [install_command.value] + self.to_args()
+        return [self.command.value] + self.to_args()
