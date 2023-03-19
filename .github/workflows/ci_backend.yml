@@ -52,6 +52,7 @@ jobs:
           docker-compose -p shapevpn run backend pytest backend_api
       - name: Build frontend
         run: |
+          docker-compose -p shapevpn up -d backend
           docker-compose -p shapevpn build -- frontend
       - name: Test frontend
         run: |
