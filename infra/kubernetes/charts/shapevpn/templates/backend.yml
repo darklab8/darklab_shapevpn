@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: backend-app
+    spec:
+      containers:
+        - name: backend-ctr
+          image: darkwind8/shapevpn:backend-{{ .Values.image_version }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          env:
+            - name: REDIS_QUEUE_HOST
+              value: "{{ .Values.redis_host }}"
+            - name: REDIS_RESULT_HOST
+              value: "{{ .Values.redis_host }}"
+            - name: DOCKER_HOST
+              value: "tcp://dind_service:2375"
+            - name: INSTALLER_NETWORK
+              value: host
+          resources:
+            requests:
+              memory: "{{.Values.soft_memory_limit}}"
+              cpu: "{{.Values.soft_cpu_limit}}"
+            limits:
+              memory: "{{.Values.hard_memory_limit}}"
+              cpu: "{{.Values.hard_cpu_limit}}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  type: ClusterIP
+  ports:
+    - name: backend
+      port: 8000
+      targetPort: 8000
+  selector:
+    app: backend-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: worker-app
+    spec:
+      containers:
+        - name: worker-ctr
+          image: darkwind8/shapevpn:backend-{{ .Values.image_version }}
+          imagePullPolicy: Always
+          command: ["/bin/sh"]
+          args: ["-c", "celery -A backend_api.src.core.celery worker"]
+          env:
+            - name: REDIS_QUEUE_HOST
+              value: "{{ .Values.redis_host }}"
+            - name: REDIS_RESULT_HOST
+              value: "{{ .Values.redis_host }}"
+            - name: DOCKER_HOST
+              value: "tcp://dind_service:2375"
+            - name: INSTALLER_NETWORK
+              value: host
+          resources:
+            requests:
+              memory: "{{.Values.soft_memory_limit}}"
+              cpu: "{{.Values.soft_cpu_limit}}"
+            limits:
+              memory: "{{.Values.hard_memory_limit}}"
+              cpu: "{{.Values.hard_cpu_limit}}"

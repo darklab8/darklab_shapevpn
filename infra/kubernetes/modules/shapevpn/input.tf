@@ -1,11 +1,7 @@
 variable "environ" {
   type = object({
-    SCRAPPY_PLAYER_URL  = string
-    SCRAPPY_BASE_URL    = string
-    DISCORDER_BOT_TOKEN = string
-    CONSOLER_PREFIX     = string
-    LOGGING             = bool
-    LOOP_DELAY          = number
+    # SCRAPPY_PLAYER_URL  = string
+    # LOGGING             = bool
   })
 }
 
@@ -15,7 +11,8 @@ variable "environment" {
 
 variable "image_version" {
   type        = string
-  description = "darkbot image version"
+  description = "shapevpn image version"
+  default     = "latest"
 }
 
 variable "limit" {

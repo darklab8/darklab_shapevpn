@@ -1,6 +1,6 @@
 provider "helm" {
   kubernetes {
-    config_path = "~/.kube/prod_darklab_config"
+    config_path = "~/.kube/prod_shapevpn_config"
   }
 }
 

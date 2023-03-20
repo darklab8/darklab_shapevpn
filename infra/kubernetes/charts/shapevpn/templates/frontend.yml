@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: frontend-app
+    spec:
+      volumes:
+      containers:
+        - name: frontend-ctr
+          image: darkwind8/shapevpn:frontend-{{ .Values.image_version }}
+          command: ["/bin/sh"]
+          args: ["-c", "npm run serve"]
+          imagePullPolicy: Always
+          env:
+            - name: VUE_APP_BACKEND_URL
+              value: http://backend-service:8000
+          resources:
+            requests:
+              memory: "{{.Values.soft_memory_limit}}"
+              cpu: "{{.Values.soft_cpu_limit}}"
+            limits:
+              memory: "{{.Values.hard_memory_limit}}"
+              cpu: "{{.Values.hard_cpu_limit}}"
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  type: ClusterIP
+  ports:
+    - name: frontend
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: frontend-app

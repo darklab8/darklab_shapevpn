@@ -46,7 +46,7 @@ module "cluster" {
   server_name  = "shapevpn-cluster"
   source       = "../modules/server"
   environment  = local.environment
-  server_power = "cpx11"
+  server_power = "cpx21"
   domain       = local.domain
   ssh_key_id   = module.ssh_key.darklab_id
   domain_records = [
