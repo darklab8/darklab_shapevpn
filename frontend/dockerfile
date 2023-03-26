@@ -1,22 +1,19 @@
 FROM node:16.14.0-bullseye-slim AS build
 
+WORKDIR /code
 COPY package-lock.json package-lock.json
 COPY package.json package.json
 RUN npm install
+RUN apt update
+RUN apt install -y nginx
+RUN rm /var/www/html/index.nginx-debian.html
 
 COPY src/ src/
 COPY tests/ tests/
 COPY public/ public/
-COPY .eslintignore .eslintignore
-COPY .eslintrc.js .eslintrc.js
-COPY babel.config.js babel.config.js
-COPY cypress.json cypress.json
-COPY jest.config.js jest.config.js
-COPY jsconfig.json jsconfig.json
-COPY vue.config.js vue.config.js
+COPY .eslintignore .eslintrc.js babel.config.js jest.config.js jsconfig.json vue.config.js ./
 
 ARG VUE_APP_BACKEND_URL
 ARG NODE_ENV
 
-COPY . .
-RUN npm run build
+CMD sh -c "npm run build && cp -R /code/dist/* /var/www/html && nginx -g \"daemon off;\""
