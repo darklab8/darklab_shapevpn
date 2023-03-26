@@ -4,10 +4,12 @@ tasks:
   # 1860 and 405 grafana imported dashboards
   grafana:connect:
     cmds:
+      - kubens loki
       - kubectl port-forward service/loki-grafana 5000:80
 
   grafana:password:
     cmds:
+      - kubens loki
       - kubectl get secret --namespace loki loki-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 
   frontend:connect:

@@ -22,11 +22,11 @@ spec:
             - containerPort: 8000
           env:
             - name: REDIS_QUEUE_HOST
-              value: "{{ .Values.redis_host }}"
+              value: "redis-service"
             - name: REDIS_RESULT_HOST
-              value: "{{ .Values.redis_host }}"
+              value: "redis-service"
             - name: DOCKER_HOST
-              value: "tcp://dind_service:2375"
+              value: "tcp://dind-service:2375"
             - name: INSTALLER_NETWORK
               value: host
           resources:
@@ -74,11 +74,11 @@ spec:
           args: ["-c", "celery -A backend_api.src.core.celery worker"]
           env:
             - name: REDIS_QUEUE_HOST
-              value: "{{ .Values.redis_host }}"
+              value: "redis-service"
             - name: REDIS_RESULT_HOST
-              value: "{{ .Values.redis_host }}"
+              value: "redis-service"
             - name: DOCKER_HOST
-              value: "tcp://dind_service:2375"
+              value: "tcp://dind-service:2375"
             - name: INSTALLER_NETWORK
               value: host
           resources:

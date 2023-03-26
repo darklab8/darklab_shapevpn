@@ -22,9 +22,7 @@ resource "helm_release" "experiment" {
     hard_memory_limit: "${var.limit.hard_memory}Mi"
     hard_cpu_limit: "${var.limit.hard_cpu}m"
 
-    hostname: "shapevpn-cluster"
     image_version: "${var.image_version}"
-    redis_host: redis-service
     domain_main: "${var.domain}"
 
     ENVIRONMENT: "${var.environment}"
