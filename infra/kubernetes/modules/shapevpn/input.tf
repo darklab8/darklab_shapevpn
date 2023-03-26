@@ -1,7 +1,5 @@
 variable "environ" {
   type = object({
-    # SCRAPPY_PLAYER_URL  = string
-    # LOGGING             = bool
   })
 }
 
@@ -13,6 +11,10 @@ variable "image_version" {
   type        = string
   description = "shapevpn image version"
   default     = "latest"
+}
+
+variable "domain" {
+  type        = string
 }
 
 variable "limit" {

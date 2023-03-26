@@ -68,6 +68,12 @@ module "cluster" {
       name    = "shapevpn-cluster.${local.domain}"
       proxied = false
     },
+    {
+      type    = "A"
+      value   = "cluster_ip"
+      name    = "api.${local.domain}"
+      proxied = false
+    },
   ]
 }
 

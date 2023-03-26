@@ -25,6 +25,7 @@ resource "helm_release" "experiment" {
     hostname: "shapevpn-cluster"
     image_version: "${var.image_version}"
     redis_host: redis-service
+    domain_main: "${var.domain}"
 
     ENVIRONMENT: "${var.environment}"
     EOT
