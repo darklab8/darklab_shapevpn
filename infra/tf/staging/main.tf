@@ -84,6 +84,10 @@ module "installer_test_subject" {
   server_power = "cpx11"
   domain       = local.domain
   ssh_key_id   = module.ssh_key.installer_id
+  ssh_key = {
+    name = "extra_installer_key"
+    public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCkYPmxS9PpssQ+dmsC21pPgpZEWhYGf8aj9gYOd+JwPeF+PH3nlcvht6n0JMCVQLI7U0HoGqkgE0JAO4HhtpN2PfGk8Rjo/lw7fQgXBkKB9pZN4Vpe+pD1Av90O08Ot5cS7IhjHc+g2ixIRugZJOdAqFrgRqXm/xoj33qmhntE03gfOtDENQF6zY1eLe4c6H3MFiFJdzb5r4RR7vyUBksPRqKVVYv0p3d/m6Gld0JVhp2skZ/Zn7qAn4gvccdlI0cEo3S3uVmZ/lB0kCJ7P/NQjLQXzlqbvSKmi/pkHs8t2M2cr5dSYyW++w1xFXf2j6x/wap2jhMfEQ1H2sim6PQd"
+  }
   server_image = "ubuntu-20.04"
   domain_records = [
     {

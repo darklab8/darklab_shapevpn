@@ -3,6 +3,18 @@ variable "ssh_key_id" {
   type        = number
 }
 
+variable "ssh_key" {
+  description = "hetzner ssh key"
+  type        = object({
+    name = string
+    public_key = string
+  })
+  default = {
+    name = ""
+    public_key = ""
+  }
+}
+
 variable "server_image" {
   description = "server image"
   type        = string
