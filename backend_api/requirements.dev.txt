@@ -4,3 +4,4 @@ mypy
 types-redis
 celery-types
 isort
+django-stubs[compatible-mypy]

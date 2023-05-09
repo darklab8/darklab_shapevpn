@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-from backend_api2.src.types import PingResponce
+from backend_api_OLD.src.types import PingResponce
 
 
 def test_read_main(client: TestClient) -> None:

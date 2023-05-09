@@ -4,8 +4,8 @@ from enum import Enum
 from pydantic import BaseModel
 from typing_extensions import Self
 
-from backend_api2.src.core import settings as conf
-from backend_api2.src.types import TaskID
+from backend_api_OLD.src.core import settings as conf
+from backend_api_OLD.src.types import TaskID
 from server_installer.src.storage.redis import RedisBase, SuffixType
 
 

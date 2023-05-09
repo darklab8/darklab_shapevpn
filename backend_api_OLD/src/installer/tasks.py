@@ -7,9 +7,9 @@ from typing import Any, Dict, Generator, Protocol, cast
 import docker  # type: ignore[import]
 from celery import Task, shared_task
 
-from backend_api2.src import exceptions
-from backend_api2.src.core import settings as conf
-from backend_api2.src.types import TaskID
+from backend_api_OLD.src import exceptions
+from backend_api_OLD.src.core import settings as conf
+from backend_api_OLD.src.types import TaskID
 from server_installer.src.interface import ui
 from server_installer.src.storage.config_encryptor import ConfigEncryptor
 
