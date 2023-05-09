@@ -1,4 +1,5 @@
 pytest
+pytest-django
 black
 mypy
 types-redis

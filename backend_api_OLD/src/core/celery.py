@@ -1,12 +1,11 @@
 import logging
 from typing import Any, Dict
 
-from celery.app.task import Task
-
 from backend_api_OLD.src.installer import measurer
 from backend_api_OLD.src.installer.tasks import InstallServerTask, ProtectedSerializer
 from backend_api_OLD.src.types import TaskID
 from server_installer.src.utils import logger
+from celery.app.task import Task
 
 Task.__class_getitem__ = classmethod(  # type: ignore[attr-defined]
     lambda cls, *args, **kwargs: cls

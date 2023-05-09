@@ -9,9 +9,9 @@ tasks:
 
   backend:format:
     cmds:
-      - black backend_api
-      - isort --profile black backend_api
-      - mypy backend_api
+      - black backend
+      - isort --profile black backend
+      - mypy backend
 
   format:
     cmds:

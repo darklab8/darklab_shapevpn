@@ -18,13 +18,13 @@ jobs:
           architecture: x64
       - name: Install requirements
         run: |
-          pip install -r backend_api/requirements.txt -r backend_api/requirements.dev.txt -c server_installer/constraints.txt
+          pip install -r backend/requirements.txt -r backend/requirements.dev.txt -c server_installer/constraints.txt
       - name: Black
-        run: black --check backend_api
+        run: black --check backend
       - name: Mypy
-        run: mypy backend_api
+        run: mypy backend
       - name: Isort
-        run: isort --check --profile black backend_api
+        run: isort --check --profile black backend
   unit-tests:
     runs-on: ubuntu-22.04
     steps:
@@ -49,7 +49,7 @@ jobs:
         run: |
           docker-compose -p shapevpn up -d redis worker beat
           sleep 5
-          docker-compose -p shapevpn run backend pytest backend_api
+          docker-compose -p shapevpn run backend pytest backend
       # - name: Build frontend
       #   run: |
       #     docker-compose -p shapevpn up -d backend

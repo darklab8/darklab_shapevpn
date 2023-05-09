@@ -3,7 +3,7 @@ x-definitions:
     &x-backend-app
     build:
       context: .
-      dockerfile: backend_api/Dockerfile
+      dockerfile: backend/Dockerfile
     depends_on:
       - redis
   x-env-args:
@@ -30,21 +30,21 @@ services:
     <<: *x-backend-app
     environment:
       <<: *x-env-args
-    command: celery -A backend_api.src.core.celery beat
+    command: celery -A backend.core.celery beat
   worker:
     <<: *x-backend-app
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       <<: *x-env-args
-    command: celery -A backend_api.src.core.celery worker
-  frontend:
-    command: npm run serve
-    build: frontend
-    environment:
-      VUE_APP_BACKEND_URL: http://localhost:8000
-    ports:
-      - 8080:8080
+    command: celery -A backend.core.celery worker
+  # frontend:
+  #   command: npm run serve
+  #   build: frontend
+  #   environment:
+  #     VUE_APP_BACKEND_URL: http://localhost:8000
+  #   ports:
+  #     - 8080:8080
 
 networks:
   default:

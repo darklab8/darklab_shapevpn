@@ -51,7 +51,7 @@ services:
     image: darkwind8/shapevpn:backend-latest
     environment:
       <<: *x-env-args
-    command: celery -A backend_api.src.core.celery beat
+    command: celery -A backend.src.core.celery beat
   worker:
     <<: *x-backend-app
     image: darkwind8/shapevpn:backend-latest
@@ -59,7 +59,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       <<: *x-env-args
-    command: celery -A backend_api.src.core.celery worker
+    command: celery -A backend.src.core.celery worker
   frontend:
     image: darkwind8/shapevpn:frontend-latest
     command: npm run serve

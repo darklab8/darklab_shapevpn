@@ -19,17 +19,15 @@ RUN wget -O docker-ce.deb https://download.docker.com/linux/debian/dists/buster/
     && apt install -y ./docker-ce.deb \
     && rm ./docker-ce.deb
 
-WORKDIR /code
-
-RUN mkdir -p backend_api
-RUN mkdir -p server_installer
-
-COPY backend_api/requirements.txt backend_api/requirements.dev.txt backend_api/
+RUN mkdir backend && mkdir server_installer
+COPY backend/requirements.txt backend/requirements.dev.txt backend/
 COPY server_installer/constraints.txt server_installer/
-RUN pip install -r backend_api/requirements.txt -r backend_api/requirements.dev.txt -c server_installer/constraints.txt
+RUN pip install -r backend/requirements.txt -r backend/requirements.dev.txt -c server_installer/constraints.txt
+
+WORKDIR /code
 
 COPY pytest.ini mypy.ini ./
 COPY server_installer server_installer
-COPY backend_api backend_api
+COPY backend backend
 
-CMD gunicorn backend_api.src.core.main:app --workers 4 --bind 0.0.0.0:8000
+CMD gunicorn backend.core.wsgi:application --workers 4 --bind 0.0.0.0:8000
