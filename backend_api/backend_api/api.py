@@ -1,5 +1,5 @@
-from ninja import NinjaAPI
 from django.http import HttpRequest
+from ninja import NinjaAPI
 
 api = NinjaAPI()
 
