@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from httpx import AsyncClient
 
-from backend_api.src.core.main import app_factory
+from backend_api2.src.core.main import app_factory
 
 
 @pytest.fixture()

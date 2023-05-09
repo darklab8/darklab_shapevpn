@@ -8,7 +8,7 @@ from cryptography.hazmat.backends import default_backend as crypto_default_backe
 from cryptography.hazmat.primitives import serialization as crypto_serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 
-from backend_api.src.core import settings
+from backend_api2.src.core import settings
 from server_installer.src.storage.config_encryptor import ConfigEncryptor
 
 secret_encryptor = ConfigEncryptor(settings.REDIS_SECRET_KEY)

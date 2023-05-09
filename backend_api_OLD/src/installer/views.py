@@ -6,10 +6,10 @@ from celery.result import AsyncResult
 from fastapi import APIRouter, Body
 from pydantic import BaseModel
 
-from backend_api.src.core import settings
-from backend_api.src.core.celery import app as celery_app
-from backend_api.src.core.celery import task_vpn_install
-from backend_api.src.types import TaskID
+from backend_api2.src.core import settings
+from backend_api2.src.core.celery import app as celery_app
+from backend_api2.src.core.celery import task_vpn_install
+from backend_api2.src.types import TaskID
 from server_installer.src.interface.ui import AuthType, UserInput
 from server_installer.src.storage import redis
 from server_installer.src.storage.config_encryptor import ConfigEncryptor

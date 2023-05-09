@@ -4,3 +4,4 @@ mypy
 types-redis
 celery-types
 isort
+pytest-asyncio

@@ -4,9 +4,9 @@ from unittest.mock import MagicMock
 import pytest
 from fastapi.testclient import TestClient
 
-from backend_api.src.core import settings as conf
-from backend_api.src.core.celery import task_vpn_install
-from backend_api.src.types import PingResponce, TaskID
+from backend_api2.src.core import settings as conf
+from backend_api2.src.core.celery import task_vpn_install
+from backend_api2.src.types import PingResponce, TaskID
 from server_installer.src.interface import ui
 from server_installer.src.utils import logger
 

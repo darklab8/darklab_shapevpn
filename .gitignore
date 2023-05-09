@@ -25,3 +25,4 @@ private_pem.pem
 public_pem.pem
 venv/
 private.abc.key
+db.sqlite3

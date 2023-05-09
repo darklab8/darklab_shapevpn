@@ -1,10 +1,12 @@
-django-ninja
-
 flower
 gunicorn
+python-dotenv
 docker
 celery[pytest,redis]
 cryptography
 pycryptodome
+fastapi
+httpx
+uvicorn[standard]
 redis
 Jinja2

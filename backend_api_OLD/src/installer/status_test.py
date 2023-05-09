@@ -1,6 +1,6 @@
 from typing import Type
 
-from backend_api.src.installer import status
+from backend_api2.src.installer import status
 
 
 def test_check_test(redis_backend: status.RedisBackend) -> None:

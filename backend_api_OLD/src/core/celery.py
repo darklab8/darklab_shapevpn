@@ -3,9 +3,9 @@ from typing import Any, Dict
 
 from celery.app.task import Task
 
-from backend_api.src.installer import measurer
-from backend_api.src.installer.tasks import InstallServerTask, ProtectedSerializer
-from backend_api.src.types import TaskID
+from backend_api2.src.installer import measurer
+from backend_api2.src.installer.tasks import InstallServerTask, ProtectedSerializer
+from backend_api2.src.types import TaskID
 from server_installer.src.utils import logger
 
 Task.__class_getitem__ = classmethod(  # type: ignore[attr-defined]
