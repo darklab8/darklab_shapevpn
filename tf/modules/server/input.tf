@@ -5,12 +5,12 @@ variable "ssh_key_id" {
 
 variable "ssh_key" {
   description = "hetzner ssh key"
-  type        = object({
-    name = string
+  type = object({
+    name       = string
     public_key = string
   })
   default = {
-    name = ""
+    name       = ""
     public_key = ""
   }
 }
