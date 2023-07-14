@@ -1,6 +1,10 @@
 version: "3"
 
 tasks:
+  hetzner_images:
+    cmds:
+      - curl -H "Authorization: Bearer $TF_VAR_staging_hcloud_token" 'https://api.hetzner.cloud/v1/images' > hetzner_images.json
+
   installer:format:
     cmds:
       - mypy server_installer

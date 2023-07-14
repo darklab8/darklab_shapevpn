@@ -120,17 +120,3 @@ def change_ssh_port(query: ui.UserInput) -> None:
     logging.info(f"msg=change_ssh_port processing")
     playbooks.change_ssh_port()
 
-
-def main(args: Optional[Sequence[str]] = None) -> None:
-    logger.configure()
-    logging.debug("launching server_installer")
-    query = interface.parse(args=args)
-
-    if query.command == ui.Command.install:
-        installing_vpn(query=query)
-    elif query.command == ui.Command.test_install:
-        test_installing_vpn(query=query)
-    elif query.command == ui.Command.enable_password_login:
-        allow_password_access(query=query)
-    elif query.command == ui.Command.change_ssh_port_to_22000:
-        change_ssh_port(query=query)

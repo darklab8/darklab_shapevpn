@@ -3,7 +3,6 @@ from typing import Any, NewType, Union
 import redis
 
 from .. import exceptions
-from ..interface import ui
 from .config_encryptor import ConfigEncryptor
 
 SuffixType = NewType("SuffixType", str)

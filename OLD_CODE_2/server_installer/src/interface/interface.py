@@ -21,7 +21,7 @@ def parse(args: Optional[Sequence[str]] = None) -> UserInput:
     install = subparsers.add_parser(Command.install.name)
     install_args(install)
 
-    test_install = subparsers.add_parser(Command.install.test_install)
+    test_install = subparsers.add_parser(Command.install.test_install.name)
     install_args(test_install)
 
     parsed = parser.parse_args(args)
@@ -37,21 +37,25 @@ def install_args(install: argparse.ArgumentParser) -> None:
         "--redis_host",
         type=RedisInput.__annotations__["redis_host"],
         default=None,
+        help="optional",
     )
     redis.add_argument(
         "--redis_port",
         type=RedisInput.__annotations__["redis_port"],
         default=None,
+        help="optional",
     )
     redis.add_argument(
         "--redis_pass",
         type=RedisInput.__annotations__["redis_pass"],
         default=None,
+        help="optional",
     )
     redis.add_argument(
         "--task_id",
         type=RedisInput.__annotations__["task_id"],
         default=None,
+        help="optional",
     )
     redis.add_argument(
         "--configs_encryption_key",

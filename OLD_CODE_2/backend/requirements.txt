@@ -1,0 +1,15 @@
+django-ninja
+
+flower
+gunicorn
+docker
+celery[pytest,redis]
+cryptography
+pycryptodome
+redis
+Jinja2
+
+django-redis
+python-dotenv
+django-cors-headers
+djangorestframework
