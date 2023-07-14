@@ -1,8 +1,6 @@
 package main
 
 import (
-	"net/http"
-
 	"shapevpn/backendApp/backUtils"
 
 	"shapevpn/docs"
@@ -14,19 +12,6 @@ import (
 
 // @BasePath /api/v1
 
-// Helloworld godoc
-// @Summary ping helloworld
-// @Schemes
-// @Description do ping
-// @Tags helloworld
-// @Accept json
-// @Produce json
-// @Success 200 {string} Helloworld
-// @Router /example/helloworld [get]
-func Helloworld(g *gin.Context) {
-	g.JSON(http.StatusOK, "helloworld")
-}
-
 func main() {
 	r := gin.Default()
 
@@ -35,7 +20,7 @@ func main() {
 	{
 		eg := v1.Group("/example")
 		{
-			eg.GET("/helloworld", Helloworld)
+			eg.GET("/helloworld", backUtils.Helloworld)
 		}
 
 		v1.GET("/ping", backUtils.Ping)
