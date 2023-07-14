@@ -1,0 +1,12 @@
+version: "3"
+tasks:
+  backend:build:docs:
+    cmds:
+      # go install github.com/swaggo/swag/cmd/swag@latest may be needed installed
+      - sudo rm -R ./docs
+      - swag init -d ./backendApp/
+
+  backend:run:
+    cmds:
+      - task: backend:build:docs
+      - go run backendApp/main.go
