@@ -10,3 +10,7 @@ tasks:
     cmds:
       - task: backend:build:docs
       - go run backendApp/main.go
+
+  test:connect:
+    cmds:
+      - ssh -i ~/.ssh/id_rsa.shapevpn.test_installer root@shapevpn-test-installer.dd84ai.com
