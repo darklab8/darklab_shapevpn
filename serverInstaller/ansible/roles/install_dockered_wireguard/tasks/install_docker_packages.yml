@@ -1,0 +1,49 @@
+---
+- name: Copy docker-ce-cli
+  ansible.builtin.copy:
+    src: docker-ce-cli.deb
+    dest: docker-ce-cli.deb
+
+- name: Copy docker-ce
+  ansible.builtin.copy:
+    src: docker-ce.deb
+    dest: docker-ce.deb
+
+- name: Copy containerd
+  ansible.builtin.copy:
+    src: containerd.deb
+    dest: containerd.deb
+
+- name: Waiting for APT lock to be released (it could be busy due to auto software updating, max waiting time 2 minutes)
+  shell: 'file="/var/lib/dpkg/lock"; attempts=0; max_attempts=120; while fuser "$file" >/dev/null 2>&1 && (( attempts < max_attempts )); do   2>&1 printf "dpkg locked, waiting (%s of %s): %s\n" "$((attempts+1))" "$max_attempts" "$file";   ((attempts++));   sleep 5; done'
+  args:
+    executable: /bin/bash
+  register: apt_lock
+
+- debug: msg="{{ apt_lock.stdout }}"
+
+- name: Waiting for APT lock2 to be released (it could be busy due to auto software updating, max waiting time 2 minutes)
+  shell: 'systemd-run --property="After=apt-daily.service apt-daily-upgrade.service" --wait /bin/true'
+  args:
+    executable: /bin/bash
+  register: apt_lock2
+
+- debug: msg="{{ apt_lock2.stdout }}"
+
+- name: Install containerd
+  apt:
+    deb: containerd.deb
+
+- name: Install docker-ce-cli
+  apt:
+    deb: docker-ce-cli.deb
+
+- name: Install docker-ce
+  apt:
+    deb: docker-ce.deb
+
+- name: Checking docker
+  shell: docker ps
+  register: docker_ps
+
+- debug: msg="{{ docker_ps.stdout }}"

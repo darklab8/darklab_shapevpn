@@ -1,0 +1,44 @@
+---
+- name: Run container
+  docker_container:
+    name: image_wireguard
+    image: darkwind8/shapevpn:wireguard-latest
+    # recreate: yes
+    state: started
+    env:
+      PUID: "1000"
+      PGID: "1000"
+      TZ: "Europe/London"
+      SERVERURL: "{{inventory_hostname}}" #optional
+      SERVERPORT: "{{server_vpn_port}}" #optional
+      PEERS: "5" #optional
+      PEERDNS: "auto" #optional
+      INTERNAL_SUBNET: "10.13.13.0" #optional
+      ALLOWEDIPS: "0.0.0.0/0" #optional
+    volumes:
+      - /wireguard_config:/config
+      - /lib/modules:/lib/modules
+    capabilities:
+      - NET_ADMIN
+      - SYS_MODULE
+    ports:
+      - "{{server_vpn_port}}:51820/udp"
+    sysctls:
+      net.ipv4.conf.all.src_valid_mark: 1
+
+- name: Create a config directory if it does not exist
+  ansible.builtin.file:
+    path: "{{config_folder}}"
+    state: directory
+
+- name: Copy config to be ready for download
+  ansible.builtin.copy:
+    src: /wireguard_config/peer{{item}}/peer{{item}}.conf
+    dest: "{{config_folder}}/{{item}}.conf"
+    remote_src: yes
+  loop:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
