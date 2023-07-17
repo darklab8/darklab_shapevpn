@@ -1,5 +1,5 @@
 ---
-- hosts: wireguard_server
+- hosts: all
   become: yes
 
   tasks:
