@@ -1,4 +1,4 @@
-package shapevpnAnsible
+package vpnPlaybooks
 
 import (
 	"path/filepath"

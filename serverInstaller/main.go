@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"shapevpn/serverInstaller/shapevpnAnsible"
+	"shapevpn/serverInstaller/vpnPlaybooks"
 
 	"github.com/apenella/go-ansible/pkg/execute"
 	"github.com/apenella/go-ansible/pkg/options"
@@ -22,7 +22,7 @@ func (s StdoutRedirect) Write(p []byte) (n int, err error) {
 
 func main() {
 	fmt.Println("executing ansible play book")
-	config := shapevpnAnsible.GetPlaybookInstallWireguard()
+	config := vpnPlaybooks.GetPlaybookInstallWireguard()
 	host := "shapevpn-test-installer.dd84ai.com"
 
 	exec := execute.NewDefaultExecute(
