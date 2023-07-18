@@ -1,7 +1,7 @@
 ---
 - name: Change ssh port
   set_fact:
-    ansible_port: {{ansible_port}}
+    ansible_port: "{{ansible_port}}"
 
 - name: Downloading configs
   ansible.builtin.fetch:

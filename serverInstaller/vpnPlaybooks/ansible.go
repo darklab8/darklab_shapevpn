@@ -11,34 +11,38 @@ func GetCurrrentFolder() string {
 	return directory
 }
 
-type PlaybookConfig struct {
+type playbookConfig struct {
 	Playbookpath string
 	Extravars    map[string]interface{}
 }
 
-func newPlaybookSettings() PlaybookConfig {
-	p := PlaybookConfig{
+func newPlaybookSettings() playbookConfig {
+	p := playbookConfig{
 		Extravars: make(map[string]interface{}),
 	}
 	p.Extravars["ansible_port"] = 22
 	return p
 }
 
-func GetPlaybookInstallPython() PlaybookConfig {
-	config := newPlaybookSettings()
-	config.Playbookpath = filepath.Join(GetCurrrentFolder(), "install_dockered_requirements.yml")
-	return config
-}
+type PlaybookName int64
 
-func GetPlaybookInstallWireguard() PlaybookConfig {
-	config := newPlaybookSettings()
-	config.Playbookpath = filepath.Join(GetCurrrentFolder(), "install_dockered_wireguard.yml")
-	config.Extravars["ansible_python_interpreter"] = "/docker_py/venv/bin/python3"
-	return config
-}
+const (
+	PbInstallPython PlaybookName = iota
+	PbInstallWireguard
+	PbDownloadConfigs
+)
 
-func GetPlaybookDownloadConfigs() PlaybookConfig {
+func GetPlaybook(playbook PlaybookName) playbookConfig {
 	config := newPlaybookSettings()
-	config.Playbookpath = filepath.Join(GetCurrrentFolder(), "download_configs.yml")
+
+	switch playbook {
+	case PbInstallPython:
+		config.Playbookpath = filepath.Join(GetCurrrentFolder(), "install_dockered_requirements.yml")
+	case PbInstallWireguard:
+		config.Playbookpath = filepath.Join(GetCurrrentFolder(), "install_dockered_wireguard.yml")
+		config.Extravars["ansible_python_interpreter"] = "/docker_py/venv/bin/python3"
+	case PbDownloadConfigs:
+		config.Playbookpath = filepath.Join(GetCurrrentFolder(), "download_configs.yml")
+	}
 	return config
 }
