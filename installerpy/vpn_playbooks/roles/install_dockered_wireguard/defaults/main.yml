@@ -1,0 +1,8 @@
+---
+config_folder: configs
+users: "[1, 2, 3, 4, 5]"       
+server_vpn_port: "31280"
+
+# useful to set invalid default port for the purpose
+# of not fogetting to write code for its overriding
+ansible_port: 333

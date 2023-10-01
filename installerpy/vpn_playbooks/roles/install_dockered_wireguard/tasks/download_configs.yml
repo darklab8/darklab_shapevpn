@@ -1,0 +1,19 @@
+---
+- name: Change ssh port
+  set_fact:
+    ansible_port: "{{ansible_port}}"
+
+- name: Downloading configs
+  ansible.builtin.fetch:
+    src: "{{config_folder}}/{{item}}.conf"
+    dest: configs/
+    flat: false
+  loop: "{{users}}"
+
+- name: Creating qr codes
+  shell: qrencode -t PNG -o configs/{{inventory_hostname}}/{{config_folder}}/{{item}}.png < configs/{{inventory_hostname}}/{{config_folder}}/{{item}}.conf
+  delegate_to: localhost
+  args:
+    creates: "configs/{{inventory_hostname}}/{{config_folder}}/{{item}}.image"
+  loop: "{{users}}"
+  become: false
