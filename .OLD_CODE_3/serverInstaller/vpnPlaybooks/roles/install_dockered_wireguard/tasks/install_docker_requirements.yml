@@ -1,0 +1,14 @@
+---
+- name: Change ssh port
+  set_fact:
+    ansible_port: "{{ansible_port}}"
+
+- name: install_docker_packages
+  include_role:
+    name: install_dockered_wireguard
+    tasks_from: install_docker_packages
+
+- name: install_docker_py
+  include_role:
+    name: install_dockered_wireguard
+    tasks_from: install_docker_py

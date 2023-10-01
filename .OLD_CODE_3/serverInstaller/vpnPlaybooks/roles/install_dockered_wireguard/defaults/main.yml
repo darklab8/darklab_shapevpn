@@ -1,0 +1,5 @@
+---
+config_folder: configs
+users: "[1, 2, 3, 4, 5]"       
+server_vpn_port: "31280"
+ansible_port: 333

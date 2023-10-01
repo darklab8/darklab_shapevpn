@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: yes
+  
+  tasks:
+    - name: install_dockered_wireguard
+      import_role:
+        name: install_dockered_wireguard
+        tasks_from: install_docker_requirements
+
+
