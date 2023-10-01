@@ -1,3 +1,6 @@
 .terraform/
 configs/*
 *.deb
+.venv/
+venv/
+__pycache__/

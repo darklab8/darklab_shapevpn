@@ -1,0 +1,6 @@
+# app
+pydantic
+
+# dev
+mypy
+pytest

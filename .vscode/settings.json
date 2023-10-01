@@ -1,0 +1,10 @@
+{
+    "terminal.integrated.env.linux": {
+    },
+    "mypy.targets": [
+        ".",
+    ],
+    "mypy.dmypyExecutable": "${workspaceFolder}/.venv/bin/dmypy",
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}
