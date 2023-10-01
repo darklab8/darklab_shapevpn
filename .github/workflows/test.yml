@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push: {}
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu:22.04
+    name: unit_tests
+    container: python:3.10
+    services:
+        redis:
+            # Docker Hub image
+            image: redis
+            # Set health checks to wait until redis has started
+            options: >-
+                --health-cmd "redis-cli ping"
+                --health-interval 10s
+                --health-timeout 5s
+                --health-retries 5
+    env:
+      SHAPEVPN_REDIS_HOST: redis
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install requirements
+        run: |
+          pip install requirements.txt -c constraints.txt
+      - name: Mypy
+        run: mypy .
+      - name: Pytest
+        run: pytest
