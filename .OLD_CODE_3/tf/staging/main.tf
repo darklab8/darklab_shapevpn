@@ -1,9 +1,9 @@
-module "stack" {
-  source       = "../modules/stack"
-  environment  = local.environment
-  zone         = local.zone
-  server_power = "cpx21"
-}
+# module "stack" {
+#   source       = "../modules/stack"
+#   environment  = local.environment
+#   zone         = local.zone
+#   server_power = "cpx21"
+# }
 
 data "aws_ssm_parameter" "shapevpn_keys" {
   name = "/terraform/staging/darklab/shapevpn"
