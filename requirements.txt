@@ -1,6 +1,12 @@
 # app
 pydantic
+redis
 
 # dev
 mypy
 pytest
+types-redis
+
+black
+isort
+autoflake

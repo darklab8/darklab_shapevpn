@@ -1,14 +1,13 @@
 from pydantic import BaseModel
-from typing import NewType
 
-ServerPort = NewType("ServerPort", int)
-SSHPrivateKeyPath = NewType("SSHPrivateKeyPath", str)
-ServerHostname = NewType("ServerHostname", str)
+from . import types
+
 
 class InputData(BaseModel):
-    port: ServerPort = ServerPort(22)
-    key: SSHPrivateKeyPath
-    hostname: ServerHostname
+    port: types.ServerPort = types.ServerPort(22)
+    key: types.SSHPrivateKeyPath
+    hostname: types.ServerHostname
+
 
 class Installer:
     def __init__(self, data: InputData):

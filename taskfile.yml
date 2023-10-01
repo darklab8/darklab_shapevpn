@@ -1,0 +1,9 @@
+version: "3"
+tasks:
+  format:
+    desc: To format with black and remove not needed imported libraries
+    cmds:
+      - black installerpy
+      - isort --profile black -sl installerpy
+      - autoflake --remove-all-unused-imports -i -r installerpy
+      - isort -m 3 installerpy
