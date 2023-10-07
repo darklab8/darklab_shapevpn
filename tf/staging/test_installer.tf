@@ -25,7 +25,7 @@ module "installer_test_subject" {
     {
       type    = "A"
       value   = "server_ip"
-      name    = "shapevpn-test-installer.${local.zone}"
+      name    = "test.${local.zone}"
       proxied = false
     },
   ]

@@ -1,5 +1,6 @@
 {
     "terminal.integrated.env.linux": {
+        "SHAPEVPN_LOG_LEVEL": "DEBUG"
     },
     "mypy.targets": [
         ".",

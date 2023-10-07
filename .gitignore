@@ -4,3 +4,4 @@ configs/*
 .venv/
 venv/
 __pycache__/
+id_rsa.*

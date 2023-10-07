@@ -6,6 +6,7 @@ from pydantic import BaseModel
 ServerPort = NewType("ServerPort", int)
 SSHPrivateKeyPath = NewType("SSHPrivateKeyPath", str)
 ServerHostname = NewType("ServerHostname", str)
+ServerUser = NewType("ServerUser", str)
 
 Command = NewType("Command", str)
 TaskID = NewType("TaskID", str)
@@ -27,3 +28,5 @@ class LogRecord(BaseModel):
 
 RedisHost = NewType("RedisHost", str)
 RedisPort = NewType("RedisPort", int)
+
+

@@ -7,3 +7,16 @@ tasks:
       - isort --profile black -sl installerpy
       - autoflake --remove-all-unused-imports -i -r installerpy
       - isort -m 3 installerpy
+
+  load_key:
+    dir: tf/staging
+    cmds:
+      - terragrunt output --raw test_server_private_key > ../../id_rsa.test
+    status:
+      - test -f ../../id_rsa.test
+
+  shell:
+    cmds:
+      - task: load_key
+      - chmod 600 id_rsa.test
+      - ssh -i id_rsa.test root@test.dd84ai.com

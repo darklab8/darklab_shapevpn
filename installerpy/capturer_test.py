@@ -1,24 +1,24 @@
-from . import types
+from . import types as t
 from .capturer import Capturer, Observer
 
 
-class StdoutObserver:
-    def notify(self, task_id: types.TaskID, log_records: list[types.LogRecord]) -> None:
-        print(log_records[-1].model_dump())
+class TestObserver:
+    def notify(self, task_id: t.TaskID, log_record: t.LogRecord) -> None:
+        self.remembered_record = log_record
 
 
 def test_capturer() -> None:
-    task_name = types.TaskName("abc")
-    task_id = types.TaskID("123")
+    task_name = t.TaskName("abc")
+    task_id = t.TaskID("123")
 
-    capturer = Capturer(types.Command("echo 123\necho 456"), task_id, task_name)
-    observer: Observer = StdoutObserver()
+    capturer = Capturer(t.Command("echo 123\necho 456"), task_id, task_name)
+    observer: Observer = TestObserver()
     capturer.register_observer(observer)
     capturer.run()
 
-    assert capturer._log_records[-1] == types.LogRecord(
-        type=types.RecordType.stdout,
-        line=types.LogLine("456\n"),
+    assert observer.remembered_record == t.LogRecord( # type: ignore[attr-defined]
+        type=t.RecordType.stdout,
+        line=t.LogLine("456\n"),
         task_name=task_name,
         task_id=task_id,
     )
